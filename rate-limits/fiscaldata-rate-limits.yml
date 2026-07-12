@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: U.S. Treasury Fiscal Data
+providerId: fiscaldata
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Government Data
+- Treasury
+- Open Data
+- Rate Limiting
+- Quotas
+description: >-
+  Treasury Fiscal Data does not publish a fixed numeric rate limit for its
+  public API, and no API key or account is required. Access is open. In
+  practice, clients should be considerate of a shared public government service:
+  request only the fields you need with the fields parameter, filter server-side
+  with the filter parameter, and page through large result sets with page[size]
+  (maximum 10000 records per page) rather than pulling everything at once.
+  Excessive or abusive request volume may be throttled or blocked at the network
+  edge, but no documented per-key quota exists because there are no keys.
+notes: >-
+  No numeric per-client request-rate limit is documented as of the review date.
+  page[size] is capped at 10000 records per request; use page[number] to
+  paginate. Be prepared to handle transient errors and back off; data updates on
+  each report's own cadence (daily for the Daily Treasury Statement, monthly for
+  the Monthly Treasury Statement and average interest rates, quarterly for rates
+  of exchange), so aggressive polling faster than that cadence yields no new
+  data.
+sources:
+- https://fiscaldata.treasury.gov/api-documentation/
+- https://fiscaldata.treasury.gov/
+responseCodes:
+  throttled: 429
+limits:
+- name: API Requests
+  scope: public
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented; access is unauthenticated and open.
+- name: Page Size
+  scope: request
+  metric: records
+  limit: 10000
+  notes: Maximum records returned per request via page[size]; paginate with page[number].
+policies:
+- name: Server-Side Filtering
+  description: Use fields, filter, and sort to reduce payload size rather than fetching entire datasets and filtering client-side.
+- name: Pagination
+  description: Retrieve large datasets in pages of up to 10000 records using page[number] and page[size].
+- name: Polling Cadence
+  description: Poll no faster than the underlying report's update cadence (daily, monthly, or quarterly); more frequent requests return no new data.
+- name: Backoff Strategy
+  description: Implement exponential backoff with jitter and honor Retry-After on any 429 or transient 5xx responses from this shared public service.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

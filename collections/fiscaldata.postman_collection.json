@@ -1,0 +1,199 @@
+{
+  "info": {
+    "name": "U.S. Treasury Fiscal Data API",
+    "description": "Free, public, read-only REST API from the U.S. Bureau of the Fiscal Service serving federal financial data (national debt, interest rates, revenue and spending, exchange rates, securities). No registration, API key, or authentication is required. Base URL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service. Every endpoint supports fields, filter, sort, format, page[number], and page[size].",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Debt",
+      "item": [
+        {
+          "name": "Debt to the Penny",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounting/od/debt_to_penny?fields=record_date,tot_pub_debt_out_amt&sort=-record_date&page[size]=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounting", "od", "debt_to_penny"],
+              "query": [
+                { "key": "fields", "value": "record_date,tot_pub_debt_out_amt" },
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "10" }
+              ]
+            },
+            "description": "Total public debt outstanding by day."
+          }
+        },
+        {
+          "name": "Interest Expense on the Debt",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounting/od/interest_expense?sort=-record_date&page[size]=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounting", "od", "interest_expense"],
+              "query": [
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "10" }
+              ]
+            },
+            "description": "Monthly and fiscal-year-to-date interest paid on the federal debt."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Interest Rates",
+      "item": [
+        {
+          "name": "Average Interest Rates on Treasury Securities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v2/accounting/od/avg_interest_rates?filter=record_date:gte:2024-01-01&sort=-record_date&page[size]=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["v2", "accounting", "od", "avg_interest_rates"],
+              "query": [
+                { "key": "filter", "value": "record_date:gte:2024-01-01" },
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "25" }
+              ]
+            },
+            "description": "Monthly average interest rate by Treasury security type and description."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Daily Treasury Statement",
+      "item": [
+        {
+          "name": "Operating Cash Balance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/accounting/dts/operating_cash_balance?fields=record_date,account_type,open_today_bal&sort=-record_date&page[size]=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "accounting", "dts", "operating_cash_balance"],
+              "query": [
+                { "key": "fields", "value": "record_date,account_type,open_today_bal" },
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "10" }
+              ]
+            },
+            "description": "Treasury General Account operating cash balance by business day."
+          }
+        },
+        {
+          "name": "Deposits and Withdrawals of Operating Cash",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/accounting/dts/deposits_withdrawals_operating_cash?sort=-record_date&page[size]=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "accounting", "dts", "deposits_withdrawals_operating_cash"],
+              "query": [
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "10" }
+              ]
+            },
+            "description": "Daily deposits to and withdrawals from federal operating cash."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Monthly Treasury Statement",
+      "item": [
+        {
+          "name": "Receipts (MTS Table 4)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/accounting/mts/mts_table_4?sort=-record_date&page[size]=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "accounting", "mts", "mts_table_4"],
+              "query": [
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "25" }
+              ]
+            },
+            "description": "Monthly federal receipts (revenue) by source."
+          }
+        },
+        {
+          "name": "Outlays (MTS Table 5)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/accounting/mts/mts_table_5?sort=-record_date&page[size]=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "accounting", "mts", "mts_table_5"],
+              "query": [
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "25" }
+              ]
+            },
+            "description": "Monthly federal outlays (spending) by agency and function."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exchange Rates",
+      "item": [
+        {
+          "name": "Treasury Reporting Rates of Exchange",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/accounting/od/rates_of_exchange?filter=record_date:gte:2024-01-01&sort=-record_date&page[size]=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "accounting", "od", "rates_of_exchange"],
+              "query": [
+                { "key": "filter", "value": "record_date:gte:2024-01-01" },
+                { "key": "sort", "value": "-record_date" },
+                { "key": "page[size]", "value": "25" }
+              ]
+            },
+            "description": "Official Treasury exchange rates per country and currency, quarterly."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Securities",
+      "item": [
+        {
+          "name": "Treasury Securities Auctions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/v1/accounting/od/auctions_query?sort=-auction_date&page[size]=25",
+              "host": ["{{baseUrl}}"],
+              "path": ["v1", "accounting", "od", "auctions_query"],
+              "query": [
+                { "key": "sort", "value": "-auction_date" },
+                { "key": "page[size]", "value": "25" }
+              ]
+            },
+            "description": "Treasury securities auction results - CUSIP, term, dates, price, and yields."
+          }
+        }
+      ]
+    }
+  ]
+}

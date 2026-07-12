@@ -1,0 +1,61 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: U.S. Treasury Fiscal Data
+providerId: fiscaldata
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Government Data
+- Treasury
+- Open Data
+- Public Domain
+- Free
+- Plans
+description: >-
+  The U.S. Treasury Fiscal Data API is completely free and public. There is no
+  registration, no API key, no authentication, and no paid tier. All datasets -
+  the national debt, average interest rates, daily and monthly Treasury
+  statements, exchange rates, and securities auctions - are served at no cost.
+  The underlying data is a U.S. Government work in the public domain and may be
+  used, reproduced, and redistributed freely. There is a single access model:
+  open and free for everyone.
+notes: >-
+  As a federal government API there is no billing, no account, and no commercial
+  plan structure. The one caveat is that data availability is subject to federal
+  government operations (for example, a government shutdown or scheduled
+  maintenance can delay report updates). No SLA is offered.
+sources:
+- https://fiscaldata.treasury.gov/api-documentation/
+- https://fiscaldata.treasury.gov/
+- https://fiscaldata.treasury.gov/about-us/
+plans:
+- id: fiscaldata-open-free
+  name: Open Public Access
+  type: free
+  description: >-
+    Free, unauthenticated, public access to every Fiscal Data dataset endpoint.
+    No API key or registration is required. Responses are available as JSON,
+    CSV, or XML with full field selection, filtering, sorting, and pagination.
+    Data is in the public domain.
+  entries:
+  - label: API Requests
+    name: api_requests
+    type: usage
+    metric: requests
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free (public domain government data; no API key)
+    userMultiplied: false
+  elements:
+  - name: All Datasets
+  - name: JSON, CSV, and XML Formats
+  - name: Field Selection, Filter, Sort, Pagination
+  - name: No Authentication Required
+  - name: Public Domain Data Reuse
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

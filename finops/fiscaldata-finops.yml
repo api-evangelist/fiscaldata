@@ -1,0 +1,85 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: U.S. Treasury Fiscal Data
+providerId: fiscaldata
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Government Data
+- Treasury
+- Open Data
+- Public Domain
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Treasury Fiscal Data usage. There is no vendor cost: the API is
+  a free public U.S. Government service with no fees, no API key, and no billing.
+  The only costs a consumer incurs are their own - the compute, storage, and
+  egress for calling the API, ingesting the responses, and retaining or
+  reprocessing the data downstream. FinOps discipline here is about controlling
+  your own data-transfer and processing footprint (avoid re-pulling full
+  datasets, filter server-side, cache results) rather than managing a provider
+  invoice.
+notes: >-
+  There is no provider invoice, currency, or billing frequency for Fiscal Data
+  itself; the FOCUS mapping below describes the zero-cost government service so
+  it can sit alongside paid services in a unified cost view. Optimize your own
+  infrastructure: cache responses to the report's update cadence and pull only
+  changed records with record_date filters.
+sources:
+- https://fiscaldata.treasury.gov/api-documentation/
+- https://fiscaldata.treasury.gov/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: U.S. Bureau of the Fiscal Service
+serviceCategory: Government Open Data
+billingModel:
+  pricingCategory: Free
+  billingFrequency: None
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+focusColumns:
+  ServiceName: Treasury Fiscal Data API
+  ServiceCategory: Government Open Data
+  ProviderName: U.S. Treasury Fiscal Data
+  PublisherName: U.S. Bureau of the Fiscal Service
+  InvoiceIssuerName: U.S. Bureau of the Fiscal Service
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Free
+meters:
+- name: api_requests
+  description: Requests made to Fiscal Data endpoints. No provider charge; drives only your own egress and compute.
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - dataset
+  - consumer
+- name: data_transfer
+  description: Response payload transferred and ingested by the consumer. No provider charge; a consumer-side infrastructure cost.
+  unit: bytes
+  aggregation: sum
+  dimensions:
+  - dataset
+  - consumer
+principles:
+- name: Visibility
+  description: Track which datasets your systems pull and how much data you transfer, even though the provider charges nothing, so downstream infrastructure cost stays visible.
+- name: Allocation
+  description: Attribute Fiscal Data ingestion to the internal workloads and teams that consume it.
+- name: Optimization
+  description: Use fields, filter, and record_date to pull only new or needed records; cache to the report's update cadence to avoid redundant transfer and processing.
+- name: Accountability
+  description: Assign owners for pipelines that ingest Fiscal Data and review their consumer-side transfer and storage footprint periodically.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

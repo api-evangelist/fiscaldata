@@ -1,0 +1,212 @@
+aid: fiscaldata
+url: https://raw.githubusercontent.com/api-evangelist/fiscaldata/refs/heads/main/apis.yml
+name: U.S. Treasury Fiscal Data
+kind: government
+description: >-
+  U.S. Treasury Fiscal Data is a free, public source for federal government
+  financial data published by the Bureau of the Fiscal Service. Its REST API
+  serves machine-readable government reports and economic indicators - the
+  national debt, average interest rates on Treasury securities, daily and
+  monthly Treasury statements of federal revenue and spending, Treasury
+  reporting rates of exchange, and Treasury securities auctions - as JSON, CSV,
+  or XML. Every dataset endpoint responds from a single database table and
+  supports field selection, filtering, sorting, and pagination. No registration,
+  API key, or authentication is required, and the data is in the public domain.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Government Data
+- Treasury
+- Economic Indicators
+- Interest Rates
+- Open Data
+- National Debt
+- Government Reports
+- Public Domain
+- Federal Finance
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: fiscaldata:fiscaldata-debt-api
+  name: Treasury Debt API
+  tags:
+  - National Debt
+  - Debt to the Penny
+  - Interest Expense
+  - Government Data
+  - Economic Indicators
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/debt-to-the-penny
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  properties:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+  - url: https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/debt-to-the-penny
+    type: APIReference
+  - url: openapi/fiscaldata-openapi.yml
+    type: OpenAPI
+  - url: collections/fiscaldata.postman_collection.json
+    type: PostmanCollection
+  - url: collections/fiscaldata.opencollection.json
+    type: OpenCollection
+  description: >-
+    National debt figures as machine-readable government reports. Debt to the
+    Penny reports the total public debt outstanding each day (debt held by the
+    public plus intragovernmental holdings), and the Interest Expense on the
+    Debt dataset reports monthly and fiscal-year-to-date interest the federal
+    government pays on its outstanding debt. Filter by record_date to pull a
+    time series of the national debt or interest expense.
+- aid: fiscaldata:fiscaldata-average-interest-rates-api
+  name: Average Interest Rates API
+  tags:
+  - Interest Rates
+  - Economic Indicators
+  - Treasury Securities
+  - Government Data
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  properties:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+  - url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    type: APIReference
+  - url: openapi/fiscaldata-openapi.yml
+    type: OpenAPI
+  - url: collections/fiscaldata.postman_collection.json
+    type: PostmanCollection
+  - url: collections/fiscaldata.opencollection.json
+    type: OpenCollection
+  description: >-
+    Monthly average interest rates on U.S. Treasury securities by security type
+    and description - Treasury Bills, Notes, Bonds, TIPS, Floating Rate Notes,
+    and the various government account series. A core economic indicator for
+    tracking the government's cost of borrowing over time; filter by
+    security_desc and record_date to build interest-rate time series.
+- aid: fiscaldata:fiscaldata-daily-treasury-statement-api
+  name: Daily Treasury Statement API
+  tags:
+  - Cash Flow
+  - Government Reports
+  - Operating Cash Balance
+  - Government Data
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  properties:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+  - url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
+    type: APIReference
+  - url: openapi/fiscaldata-openapi.yml
+    type: OpenAPI
+  - url: collections/fiscaldata.postman_collection.json
+    type: PostmanCollection
+  - url: collections/fiscaldata.opencollection.json
+    type: OpenCollection
+  description: >-
+    The Daily Treasury Statement (DTS) summarizes the federal government's cash
+    and debt operations each business day - the Treasury General Account
+    operating cash balance, deposits and withdrawals of operating cash, public
+    debt transactions, and tax deposits. Near-real-time government-finance
+    reporting for daily cash-flow and liquidity analysis.
+- aid: fiscaldata:fiscaldata-monthly-treasury-statement-api
+  name: Monthly Treasury Statement API
+  tags:
+  - Federal Revenue
+  - Federal Spending
+  - Budget Deficit
+  - Economic Indicators
+  - Government Reports
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  properties:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+  - url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    type: APIReference
+  - url: openapi/fiscaldata-openapi.yml
+    type: OpenAPI
+  - url: collections/fiscaldata.postman_collection.json
+    type: PostmanCollection
+  - url: collections/fiscaldata.opencollection.json
+    type: OpenCollection
+  description: >-
+    The Monthly Treasury Statement (MTS) is the official monthly report of
+    federal government receipts (revenue) and outlays (spending), the resulting
+    budget surplus or deficit, and the means of financing it. Multiple table
+    endpoints break out receipts by source, outlays by agency and function, and
+    the deficit - the primary economic indicators for U.S. fiscal policy.
+- aid: fiscaldata:fiscaldata-exchange-rates-api
+  name: Treasury Reporting Rates of Exchange API
+  tags:
+  - Exchange Rates
+  - Currency
+  - Government Data
+  - Economic Indicators
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  properties:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+  - url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    type: APIReference
+  - url: openapi/fiscaldata-openapi.yml
+    type: OpenAPI
+  - url: collections/fiscaldata.postman_collection.json
+    type: PostmanCollection
+  - url: collections/fiscaldata.opencollection.json
+    type: OpenCollection
+  description: >-
+    The official U.S. Treasury Reporting Rates of Exchange - the exchange rates
+    the federal government uses to convert foreign currency balances into U.S.
+    dollars for reporting. Rates are provided quarterly per country and
+    currency, with an effective_date; filter by country_currency_desc and
+    record_date to retrieve the official rate for any supported currency.
+- aid: fiscaldata:fiscaldata-securities-api
+  name: Treasury Securities API
+  tags:
+  - Treasury Securities
+  - Auctions
+  - Interest Rates
+  - Government Data
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  properties:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+  - url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
+    type: APIReference
+  - url: openapi/fiscaldata-openapi.yml
+    type: OpenAPI
+  - url: collections/fiscaldata.postman_collection.json
+    type: PostmanCollection
+  - url: collections/fiscaldata.opencollection.json
+    type: OpenCollection
+  description: >-
+    Treasury securities auction data - CUSIP, security type and term, auction
+    and issue and maturity dates, price per 100, high and low yields, and bid
+    metrics for Bills, Notes, Bonds, TIPS, and FRNs sold at Treasury auctions.
+    Filter by security_type, auction_date, or maturity_date to analyze issuance
+    and yields.
+common:
+- type: Website
+  url: https://fiscaldata.treasury.gov
+- type: Documentation
+  url: https://fiscaldata.treasury.gov/api-documentation/
+- type: Support
+  url: https://api-community.fiscal.treasury.gov/
+- type: GitHubOrganization
+  url: https://github.com/fedspendingtransparency/fiscal-data
+- type: Plans
+  url: plans/fiscaldata-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/fiscaldata-rate-limits.yml
+- type: FinOps
+  url: finops/fiscaldata-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

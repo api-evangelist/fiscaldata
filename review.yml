@@ -1,0 +1,90 @@
+aid: fiscaldata
+name: U.S. Treasury Fiscal Data
+review:
+  question: Does Treasury Fiscal Data expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. The Treasury Fiscal Data API is a
+    read-only, request/response RESTful API over HTTPS. It accepts only GET
+    requests against per-dataset endpoints and returns JSON, CSV, or XML.
+    There is no server-push transport - no WebSocket and no Server-Sent Events
+    (SSE) streaming - on the Fiscal Data API to model. Freshness is delivered
+    by the underlying reports updating on their own cadence (daily, monthly,
+    quarterly) and clients re-querying, not by any push channel.
+findings:
+  summary: |
+    Treasury Fiscal Data does not publish a documented public WebSocket API.
+    Fiscal Data is a free public data API from the U.S. Bureau of the Fiscal
+    Service (base https://api.fiscaldata.treasury.gov/services/api/fiscal_service).
+    It is a RESTful API that accepts GET requests, returns JSON (or CSV/XML),
+    and uses standard HTTP response codes. No registration, API key, or
+    authentication is required. Each endpoint maps to a single database table
+    from a published report (dataset) and supports the query parameters fields,
+    filter, sort, format, page[number], and page[size]. All access is
+    client-initiated request/response over HTTPS; there is no realtime,
+    bidirectional, or streaming WebSocket (ws:// or wss://) endpoint, and no
+    SSE stream, documented anywhere in the Fiscal Data API documentation as of
+    the review date.
+  access: |
+    Free and open. No authentication, API key, or account is required. Data is
+    U.S. federal government information in the public domain. The API is
+    versioned per dataset (endpoints are at v1.0.0 or v2.0.0), and the same
+    data is browsable as HTML tables and downloadable as CSV/JSON/XML on
+    fiscaldata.treasury.gov.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+      documented: true
+      note: Read-only GET endpoints, one per dataset table. Returns JSON, CSV, or XML via the format parameter. No auth.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in the Fiscal Data API documentation as of the review date.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events streaming surface is documented; the API is pure request/response.
+  endpointsConfirmedRest:
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/interest_expense
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/avg_interest_rates
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/operating_cash_balance
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/dts/deposits_withdrawals_operating_cash
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_4
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/mts/mts_table_5
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/rates_of_exchange
+    - GET https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/auctions_query
+  verifiedLive:
+    note: |
+      Endpoints were queried live during the review. Example responses:
+      debt_to_penny returned total-count 8346 with fields record_date and
+      tot_pub_debt_out_amt; avg_interest_rates returned 4977 records;
+      rates_of_exchange returned 18975 records; operating_cash_balance
+      honored fields, filter (record_date:gte:), sort (-record_date), and
+      format=json. All returned HTTP 200 with no authentication.
+sources:
+  - url: https://fiscaldata.treasury.gov/api-documentation/
+    type: Documentation
+    note: Official API docs. RESTful, GET only, JSON/CSV/XML, no API key. Describes fields, filter, sort, format, and pagination parameters. No WebSocket mentioned.
+  - url: https://fiscaldata.treasury.gov/
+    type: Website
+    note: Fiscal Data home; datasets browsable and downloadable. No streaming/push surface.
+  - url: https://api-community.fiscal.treasury.gov/
+    type: Support
+    note: Fiscal Service Enterprise API Community. Lists enterprise REST APIs; no WebSocket API documented.
+  - url: https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/accounting/od/debt_to_penny
+    type: APIReference
+    note: Live REST endpoint, HTTP 200, returns data/meta/links JSON. Request/response only.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. The Treasury Fiscal Data API is a
+    read-only request/response REST API over HTTPS with no server-push
+    transport (no WebSocket, no SSE) to model, so no AsyncAPI document was
+    created. The entry documents the REST surface via an OpenAPI 3.0 document
+    and Postman / Open Collection artifacts.
