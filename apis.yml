@@ -193,6 +193,8 @@ apis:
     Filter by security_type, auction_date, or maturity_date to analyze issuance
     and yields.
 common:
+- type: AgenticAccess
+  url: agentic-access/fiscaldata-agentic-access.yml
 - type: Website
   url: https://fiscaldata.treasury.gov
 - type: Documentation
