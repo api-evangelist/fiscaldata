@@ -1,0 +1,170 @@
+openapi: 3.0.3
+info:
+  title: U.S. Treasury Fiscal Data Daily Treasury Statement Securities API
+  description: 'The U.S. Treasury Fiscal Data API is a free, public, read-only RESTful API from the Bureau of the Fiscal Service that serves federal government financial data - the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions.
+
+
+    The API accepts only GET requests, returns JSON by default (CSV and XML are available via the `format` parameter), and uses standard HTTP response codes. No registration, API key, or authentication is required and the data is in the public domain.
+
+
+    Each endpoint maps to a single database table from a published report (a "dataset"). Every endpoint accepts the same query parameters - `fields` for column selection, `filter` for row filtering, `sort` for ordering, `format` for the response type, and `page[number]` / `page[size]` for pagination. Endpoints are versioned individually as `v1` or `v2`; consult each dataset''s detail page for its current version.
+
+
+    This document models a representative set of the most-requested endpoints. The full catalog of datasets is listed at https://fiscaldata.treasury.gov/api-documentation/.'
+  version: '1.0'
+  contact:
+    name: U.S. Treasury Fiscal Data
+    url: https://fiscaldata.treasury.gov
+  license:
+    name: Public Domain (U.S. Government Work)
+    url: https://fiscaldata.treasury.gov/about-us/
+servers:
+- url: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  description: Fiscal Data production API (no authentication required)
+tags:
+- name: Securities
+  description: Treasury securities auction results.
+paths:
+  /v1/accounting/od/auctions_query:
+    get:
+      operationId: getAuctionsQuery
+      tags:
+      - Securities
+      summary: Treasury Securities Auctions
+      description: Treasury securities auction results - CUSIP, security type and term, auction / issue / maturity dates, price per 100, yields, and bid metrics for Bills, Notes, Bonds, TIPS, and FRNs.
+      parameters:
+      - $ref: '#/components/parameters/Fields'
+      - $ref: '#/components/parameters/Filter'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Format'
+      - $ref: '#/components/parameters/PageNumber'
+      - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+components:
+  responses:
+    DatasetResponse:
+      description: A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DatasetResponse'
+        text/csv:
+          schema:
+            type: string
+        application/xml:
+          schema:
+            type: string
+  parameters:
+    Sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`.'
+      schema:
+        type: string
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+    Fields:
+      name: fields
+      in: query
+      required: false
+      description: 'Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`.'
+      schema:
+        type: string
+    PageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: The page of results to return (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of results per page. Maximum 10000.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
+    Filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`.'
+      schema:
+        type: string
+  schemas:
+    DatasetResponse:
+      type: object
+      description: Standard Fiscal Data envelope. `data` is an array of records whose fields vary per dataset; all values are returned as strings.
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        meta:
+          $ref: '#/components/schemas/Meta'
+        links:
+          $ref: '#/components/schemas/Links'
+    Links:
+      type: object
+      description: Pagination links (query-string fragments).
+      properties:
+        self:
+          type: string
+        first:
+          type: string
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+        last:
+          type: string
+    Meta:
+      type: object
+      description: Metadata describing the returned fields and the full result set.
+      properties:
+        count:
+          type: integer
+          description: Number of records on this page.
+        labels:
+          type: object
+          description: Human-readable label for each field.
+          additionalProperties:
+            type: string
+        dataTypes:
+          type: object
+          description: Data type for each field (e.g. DATE, CURRENCY, INTEGER, STRING).
+          additionalProperties:
+            type: string
+        dataFormats:
+          type: object
+          description: Display format for each field (e.g. YYYY-MM-DD, $10.20).
+          additionalProperties:
+            type: string
+        total-count:
+          type: integer
+          description: Total number of records across all pages for the query.
+        total-pages:
+          type: integer
+          description: Total number of pages for the query at the current page size.
