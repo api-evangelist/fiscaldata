@@ -1,0 +1,368 @@
+openapi: 3.0.3
+info:
+  title: U.S. Treasury Fiscal Data API
+  description: >-
+    The U.S. Treasury Fiscal Data API is a free, public, read-only RESTful API
+    from the Bureau of the Fiscal Service that serves federal government
+    financial data - the national debt, average interest rates on Treasury
+    securities, daily and monthly Treasury statements of revenue and spending,
+    Treasury reporting rates of exchange, and Treasury securities auctions.
+
+
+    The API accepts only GET requests, returns JSON by default (CSV and XML are
+    available via the `format` parameter), and uses standard HTTP response
+    codes. No registration, API key, or authentication is required and the data
+    is in the public domain.
+
+
+    Each endpoint maps to a single database table from a published report
+    (a "dataset"). Every endpoint accepts the same query parameters - `fields`
+    for column selection, `filter` for row filtering, `sort` for ordering,
+    `format` for the response type, and `page[number]` / `page[size]` for
+    pagination. Endpoints are versioned individually as `v1` or `v2`; consult
+    each dataset's detail page for its current version.
+
+
+    This document models a representative set of the most-requested endpoints.
+    The full catalog of datasets is listed at
+    https://fiscaldata.treasury.gov/api-documentation/.
+  version: '1.0'
+  contact:
+    name: U.S. Treasury Fiscal Data
+    url: https://fiscaldata.treasury.gov
+  license:
+    name: Public Domain (U.S. Government Work)
+    url: https://fiscaldata.treasury.gov/about-us/
+servers:
+  - url: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+    description: Fiscal Data production API (no authentication required)
+tags:
+  - name: Debt
+    description: National debt outstanding and interest expense on the debt.
+  - name: Interest Rates
+    description: Average interest rates on U.S. Treasury securities.
+  - name: Daily Treasury Statement
+    description: Daily federal cash and debt operations.
+  - name: Monthly Treasury Statement
+    description: Monthly federal receipts, outlays, and the budget deficit.
+  - name: Exchange Rates
+    description: Treasury reporting rates of exchange for foreign currencies.
+  - name: Securities
+    description: Treasury securities auction results.
+paths:
+  /v2/accounting/od/debt_to_penny:
+    get:
+      operationId: getDebtToPenny
+      tags:
+        - Debt
+      summary: Debt to the Penny
+      description: >-
+        Total public debt outstanding reported each day - debt held by the
+        public, intragovernmental holdings, and their total. Filter by
+        `record_date` to build a national-debt time series.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v2/accounting/od/interest_expense:
+    get:
+      operationId: getInterestExpense
+      tags:
+        - Debt
+      summary: Interest Expense on the Public Debt Outstanding
+      description: >-
+        Monthly and fiscal-year-to-date interest the federal government pays on
+        its outstanding debt, broken out by expense category, group, and type.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v2/accounting/od/avg_interest_rates:
+    get:
+      operationId: getAverageInterestRates
+      tags:
+        - Interest Rates
+      summary: Average Interest Rates on U.S. Treasury Securities
+      description: >-
+        Monthly average interest rate by security type and description - Bills,
+        Notes, Bonds, TIPS, Floating Rate Notes, and government account series.
+        Filter by `security_desc` and `record_date` for rate time series.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v1/accounting/dts/operating_cash_balance:
+    get:
+      operationId: getOperatingCashBalance
+      tags:
+        - Daily Treasury Statement
+      summary: Operating Cash Balance
+      description: >-
+        The Treasury General Account (TGA) operating cash balance reported each
+        business day in the Daily Treasury Statement.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v1/accounting/dts/deposits_withdrawals_operating_cash:
+    get:
+      operationId: getDepositsWithdrawalsOperatingCash
+      tags:
+        - Daily Treasury Statement
+      summary: Deposits and Withdrawals of Operating Cash
+      description: >-
+        Daily deposits to and withdrawals from the federal government's
+        operating cash, by transaction type, from the Daily Treasury Statement.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v1/accounting/mts/mts_table_4:
+    get:
+      operationId: getMtsReceipts
+      tags:
+        - Monthly Treasury Statement
+      summary: MTS Table 4 - Receipts of the U.S. Government
+      description: >-
+        Monthly federal government receipts (revenue) by source, with current
+        month and fiscal-year-to-date gross, refund, and net amounts, from the
+        Monthly Treasury Statement.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v1/accounting/mts/mts_table_5:
+    get:
+      operationId: getMtsOutlays
+      tags:
+        - Monthly Treasury Statement
+      summary: MTS Table 5 - Outlays of the U.S. Government
+      description: >-
+        Monthly federal government outlays (spending) by agency and function,
+        with current month and fiscal-year-to-date amounts, from the Monthly
+        Treasury Statement.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v1/accounting/od/rates_of_exchange:
+    get:
+      operationId: getRatesOfExchange
+      tags:
+        - Exchange Rates
+      summary: Treasury Reporting Rates of Exchange
+      description: >-
+        Official U.S. Treasury exchange rates used to convert foreign currency
+        balances into U.S. dollars, provided quarterly per country and currency
+        with an effective date.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+  /v1/accounting/od/auctions_query:
+    get:
+      operationId: getAuctionsQuery
+      tags:
+        - Securities
+      summary: Treasury Securities Auctions
+      description: >-
+        Treasury securities auction results - CUSIP, security type and term,
+        auction / issue / maturity dates, price per 100, yields, and bid
+        metrics for Bills, Notes, Bonds, TIPS, and FRNs.
+      parameters:
+        - $ref: '#/components/parameters/Fields'
+        - $ref: '#/components/parameters/Filter'
+        - $ref: '#/components/parameters/Sort'
+        - $ref: '#/components/parameters/Format'
+        - $ref: '#/components/parameters/PageNumber'
+        - $ref: '#/components/parameters/PageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/DatasetResponse'
+components:
+  parameters:
+    Fields:
+      name: fields
+      in: query
+      required: false
+      description: >-
+        Comma-separated list of fields (columns) to return. Omit to return all
+        fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`.
+      schema:
+        type: string
+    Filter:
+      name: filter
+      in: query
+      required: false
+      description: >-
+        Filter rows using `field:operator:value`, comma-separated for multiple
+        filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in`
+        (values in parentheses). Example:
+        `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`.
+      schema:
+        type: string
+    Sort:
+      name: sort
+      in: query
+      required: false
+      description: >-
+        Comma-separated fields to sort by, ascending by default; prefix a field
+        with `-` for descending. Example: `-record_date`.
+      schema:
+        type: string
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+          - json
+          - csv
+          - xml
+        default: json
+    PageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: The page of results to return (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of results per page. Maximum 10000.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
+  responses:
+    DatasetResponse:
+      description: >-
+        A page of dataset records with metadata and pagination links. When
+        `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DatasetResponse'
+        text/csv:
+          schema:
+            type: string
+        application/xml:
+          schema:
+            type: string
+  schemas:
+    DatasetResponse:
+      type: object
+      description: >-
+        Standard Fiscal Data envelope. `data` is an array of records whose
+        fields vary per dataset; all values are returned as strings.
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties:
+              type: string
+        meta:
+          $ref: '#/components/schemas/Meta'
+        links:
+          $ref: '#/components/schemas/Links'
+    Meta:
+      type: object
+      description: >-
+        Metadata describing the returned fields and the full result set.
+      properties:
+        count:
+          type: integer
+          description: Number of records on this page.
+        labels:
+          type: object
+          description: Human-readable label for each field.
+          additionalProperties:
+            type: string
+        dataTypes:
+          type: object
+          description: Data type for each field (e.g. DATE, CURRENCY, INTEGER, STRING).
+          additionalProperties:
+            type: string
+        dataFormats:
+          type: object
+          description: Display format for each field (e.g. YYYY-MM-DD, $10.20).
+          additionalProperties:
+            type: string
+        total-count:
+          type: integer
+          description: Total number of records across all pages for the query.
+        total-pages:
+          type: integer
+          description: Total number of pages for the query at the current page size.
+    Links:
+      type: object
+      description: Pagination links (query-string fragments).
+      properties:
+        self:
+          type: string
+        first:
+          type: string
+        prev:
+          type: string
+          nullable: true
+        next:
+          type: string
+          nullable: true
+        last:
+          type: string

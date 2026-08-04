@@ -1,0 +1,24 @@
+{
+  "provider": "fiscaldata",
+  "sources": [
+    "fiscaldata-daily-treasury-statement-api-openapi.yml",
+    "fiscaldata-debt-api-openapi.yml",
+    "fiscaldata-exchange-rates-api-openapi.yml",
+    "fiscaldata-interest-rates-api-openapi.yml",
+    "fiscaldata-monthly-treasury-statement-api-openapi.yml",
+    "fiscaldata-securities-api-openapi.yml"
+  ],
+  "outputs": [
+    "fiscaldata-daily-treasury-statement-api-openapi.yml",
+    "fiscaldata-debt-api-openapi.yml",
+    "fiscaldata-exchange-rates-api-openapi.yml",
+    "fiscaldata-interest-rates-api-openapi.yml",
+    "fiscaldata-monthly-treasury-statement-api-openapi.yml",
+    "fiscaldata-securities-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
