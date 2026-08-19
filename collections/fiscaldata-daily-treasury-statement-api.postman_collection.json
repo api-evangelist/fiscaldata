@@ -1,0 +1,308 @@
+{
+  "item": [
+    {
+      "id": "951bba9d-4be8-46e7-bf7b-6271f4508091",
+      "name": "Daily Treasury Statement",
+      "description": {
+        "content": "Daily federal cash and debt operations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "51c01988-f547-48b1-a1e6-8ac87891aa46",
+          "name": "Operating Cash Balance",
+          "request": {
+            "name": "Operating Cash Balance",
+            "description": {
+              "content": "The Treasury General Account (TGA) operating cash balance reported each business day in the Daily Treasury Statement.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounting",
+                "dts",
+                "operating_cash_balance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to JSON."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "1",
+                  "description": "The page of results to return (1-based)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Number of results per page. Maximum 10000."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cced277d-56a8-47e7-b745-e0f201308f60",
+              "name": "A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounting",
+                    "dts",
+                    "operating_cash_balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\",\n      \"key_4\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"count\": 53,\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"dataTypes\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"dataFormats\": {\n      \"key_0\": \"string\"\n    },\n    \"total-count\": 2641,\n    \"total-pages\": 4323\n  },\n  \"links\": {\n    \"self\": \"string\",\n    \"first\": \"string\",\n    \"prev\": \"string\",\n    \"next\": \"string\",\n    \"last\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9eaf3521-26e1-4ac2-b7c3-1989f200cfc3",
+          "name": "Deposits and Withdrawals of Operating Cash",
+          "request": {
+            "name": "Deposits and Withdrawals of Operating Cash",
+            "description": {
+              "content": "Daily deposits to and withdrawals from the federal government's operating cash, by transaction type, from the Daily Treasury Statement.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounting",
+                "dts",
+                "deposits_withdrawals_operating_cash"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to JSON."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "1",
+                  "description": "The page of results to return (1-based)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Number of results per page. Maximum 10000."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cc782a10-bbe1-4fa1-b6f4-d7971bd28470",
+              "name": "A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounting",
+                    "dts",
+                    "deposits_withdrawals_operating_cash"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"count\": 7498,\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"dataTypes\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    \"dataFormats\": {\n      \"key_0\": \"string\"\n    },\n    \"total-count\": 6504,\n    \"total-pages\": 56\n  },\n  \"links\": {\n    \"self\": \"string\",\n    \"first\": \"string\",\n    \"prev\": \"string\",\n    \"next\": \"string\",\n    \"last\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "fdf22cd3-f879-4416-9b3f-e1e9f8b8f78d",
+    "name": "U.S. Treasury Fiscal Data Daily Treasury Statement API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The U.S. Treasury Fiscal Data API is a free, public, read-only RESTful API from the Bureau of the Fiscal Service that serves federal government financial data - the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions.\n\nThe API accepts only GET requests, returns JSON by default (CSV and XML are available via the `format` parameter), and uses standard HTTP response codes. No registration, API key, or authentication is required and the data is in the public domain.\n\nEach endpoint maps to a single database table from a published report (a \"dataset\"). Every endpoint accepts the same query parameters - `fields` for column selection, `filter` for row filtering, `sort` for ordering, `format` for the response type, and `page[number]` / `page[size]` for pagination. Endpoints are versioned individually as `v1` or `v2`; consult each dataset's detail page for its current version.\n\nThis document models a representative set of the most-requested endpoints. The full catalog of datasets is listed at https://fiscaldata.treasury.gov/api-documentation/.\n\nContact Support:\n Name: U.S. Treasury Fiscal Data",
+      "type": "text/plain"
+    }
+  }
+}

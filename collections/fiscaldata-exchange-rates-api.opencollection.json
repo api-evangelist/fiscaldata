@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "U.S. Treasury Fiscal Data Daily Treasury Statement Exchange Rates API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exchange Rates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Treasury Reporting Rates of Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v1/accounting/od/rates_of_exchange",
+            "params": [
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Response format. Defaults to JSON."
+              },
+              {
+                "name": "page[number]",
+                "value": "",
+                "type": "query",
+                "description": "The page of results to return (1-based)."
+              },
+              {
+                "name": "page[size]",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page. Maximum 10000."
+              }
+            ]
+          },
+          "docs": "Official U.S. Treasury exchange rates used to convert foreign currency balances into U.S. dollars, provided quarterly per country and currency with an effective date."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

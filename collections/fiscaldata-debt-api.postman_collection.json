@@ -1,0 +1,308 @@
+{
+  "item": [
+    {
+      "id": "0638859c-db0e-42fe-9daa-af26df572290",
+      "name": "Debt",
+      "description": {
+        "content": "National debt outstanding and interest expense on the debt.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "33a2f5df-6df8-4322-9c3e-74e546dfffaf",
+          "name": "Debt to the Penny",
+          "request": {
+            "name": "Debt to the Penny",
+            "description": {
+              "content": "Total public debt outstanding reported each day - debt held by the public, intragovernmental holdings, and their total. Filter by `record_date` to build a national-debt time series.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "accounting",
+                "od",
+                "debt_to_penny"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to JSON."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "1",
+                  "description": "The page of results to return (1-based)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Number of results per page. Maximum 10000."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e003cfe0-8196-4330-be87-4c5f381e3815",
+              "name": "A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "accounting",
+                    "od",
+                    "debt_to_penny"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\",\n      \"key_3\": \"string\"\n    },\n    {\n      \"key_0\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"count\": 7772,\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"dataTypes\": {\n      \"key_0\": \"string\"\n    },\n    \"dataFormats\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"total-count\": 3887,\n    \"total-pages\": 8741\n  },\n  \"links\": {\n    \"self\": \"string\",\n    \"first\": \"string\",\n    \"prev\": \"string\",\n    \"next\": \"string\",\n    \"last\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c19d304e-e5a6-48d1-a7a5-f2df8ec905c2",
+          "name": "Interest Expense on the Public Debt Outstanding",
+          "request": {
+            "name": "Interest Expense on the Public Debt Outstanding",
+            "description": {
+              "content": "Monthly and fiscal-year-to-date interest the federal government pays on its outstanding debt, broken out by expense category, group, and type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "accounting",
+                "od",
+                "interest_expense"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fields",
+                  "value": "<string>",
+                  "description": "Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`."
+                },
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "json",
+                  "description": "Response format. Defaults to JSON."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[number]",
+                  "value": "1",
+                  "description": "The page of results to return (1-based)."
+                },
+                {
+                  "disabled": false,
+                  "key": "page[size]",
+                  "value": "100",
+                  "description": "Number of results per page. Maximum 10000."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d42a8477-f1fa-4a08-9aff-fd51ae3d7db7",
+              "name": "A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "accounting",
+                    "od",
+                    "interest_expense"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fields",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "format",
+                      "value": "json"
+                    },
+                    {
+                      "key": "page[number]",
+                      "value": "1"
+                    },
+                    {
+                      "key": "page[size]",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"count\": 7460,\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"dataTypes\": {\n      \"key_0\": \"string\"\n    },\n    \"dataFormats\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"total-count\": 4000,\n    \"total-pages\": 9612\n  },\n  \"links\": {\n    \"self\": \"string\",\n    \"first\": \"string\",\n    \"prev\": \"string\",\n    \"next\": \"string\",\n    \"last\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.fiscaldata.treasury.gov/services/api/fiscal_service",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ba5cdeae-27a0-46a3-a03c-19be844cc6f7",
+    "name": "U.S. Treasury Fiscal Data Daily Treasury Statement Debt API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The U.S. Treasury Fiscal Data API is a free, public, read-only RESTful API from the Bureau of the Fiscal Service that serves federal government financial data - the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions.\n\nThe API accepts only GET requests, returns JSON by default (CSV and XML are available via the `format` parameter), and uses standard HTTP response codes. No registration, API key, or authentication is required and the data is in the public domain.\n\nEach endpoint maps to a single database table from a published report (a \"dataset\"). Every endpoint accepts the same query parameters - `fields` for column selection, `filter` for row filtering, `sort` for ordering, `format` for the response type, and `page[number]` / `page[size]` for pagination. Endpoints are versioned individually as `v1` or `v2`; consult each dataset's detail page for its current version.\n\nThis document models a representative set of the most-requested endpoints. The full catalog of datasets is listed at https://fiscaldata.treasury.gov/api-documentation/.\n\nContact Support:\n Name: U.S. Treasury Fiscal Data",
+      "type": "text/plain"
+    }
+  }
+}
