@@ -238,6 +238,9 @@ apis:
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
 common:
+- type: CapabilityMap
+  url: capabilities/fiscaldata-capability-edges.yml
+  name: U.S. Treasury Fiscal Data Business Capability Map
 - type: AgenticAccess
   url: agentic-access/fiscaldata-agentic-access.yml
 - type: Website

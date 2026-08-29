@@ -1,0 +1,63 @@
+slug: fiscaldata
+provider: U.S. Treasury Fiscal Data
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Public Sector & Government
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Debt
+  spec_file: fiscaldata-debt-api-openapi.yml
+  capability_id: BC-3280.40
+  capability_id_l1: BC-3280
+  capability_name: Public Debt Management
+  confidence: 0.8
+  evidence: getDebtToPenny  Debt to the Penny; getInterestExpense  Interest Expense on the Public Debt
+    Outstanding
+  reason: Operations expose outstanding public debt and interest expense on the public debt — sovereign
+    debt servicing/management data, squarely Public Debt Management.
+- tag: Securities
+  spec_file: fiscaldata-securities-api-openapi.yml
+  capability_id: BC-3280.40
+  capability_id_l1: BC-3280
+  capability_name: Public Debt Management
+  confidence: 0.75
+  evidence: GET /v1/accounting/od/auctions_query  Treasury Securities Auctions
+  reason: Data on Treasury securities auctions, i.e. issuance of sovereign debt instruments — Public Debt
+    Management. Not investment/securities trading capability.
+- tag: Daily Treasury Statement
+  spec_file: fiscaldata-daily-treasury-statement-api-openapi.yml
+  capability_id: BC-3280.50
+  capability_id_l1: BC-3280
+  capability_name: Cash and Treasury Operations
+  confidence: 0.7
+  evidence: GET /v1/accounting/dts/deposits_withdrawals_operating_cash  Deposits and Withdrawals of Operating
+    Cash; getOperatingCashBalance  Operating Cash Balance
+  reason: The two operations serve the Daily Treasury Statement datasets on federal operating cash balances
+    and cash deposits/withdrawals — government cash and treasury operations data within public finance.
+    Some ambiguity with fiscal reporting/disclosure since this is a published report, hence 0.7.
+- tag: Interest Rates
+  spec_file: fiscaldata-interest-rates-api-openapi.yml
+  capability_id: BC-3280.40
+  capability_id_l1: BC-3280
+  capability_name: Public Debt Management
+  confidence: 0.7
+  evidence: getAverageInterestRates  Average Interest Rates on U.S. Treasury Securities
+  reason: Average interest rates on outstanding Treasury securities is debt-instrument servicing/cost
+    data, part of sovereign debt management. Not corporate interest-rate risk hedging.
+- tag: Monthly Treasury Statement
+  spec_file: fiscaldata-monthly-treasury-statement-api-openapi.yml
+  capability_id: BC-3280.60
+  capability_id_l1: BC-3280
+  capability_name: Fiscal Reporting and Disclosure
+  confidence: 0.7
+  evidence: MTS Table 4 - Receipts of the U.S. Government; MTS Table 5 - Outlays of the U.S. Government
+  reason: The Monthly Treasury Statement is an in-year fiscal report of federal receipts and outlays —
+    fiscal reporting and disclosure. Some overlap with appropriations execution (outlays), hence 0.7.
