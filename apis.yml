@@ -12,6 +12,18 @@ description: >-
   or XML. Every dataset endpoint responds from a single database table and
   supports field selection, filtering, sorting, and pagination. No registration,
   API key, or authentication is required, and the data is in the public domain.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: free
   onboarding: open
