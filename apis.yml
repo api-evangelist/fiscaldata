@@ -2,16 +2,7 @@ aid: fiscaldata
 url: https://raw.githubusercontent.com/api-evangelist/fiscaldata/refs/heads/main/apis.yml
 name: U.S. Treasury Fiscal Data
 kind: government
-description: >-
-  U.S. Treasury Fiscal Data is a free, public source for federal government
-  financial data published by the Bureau of the Fiscal Service. Its REST API
-  serves machine-readable government reports and economic indicators - the
-  national debt, average interest rates on Treasury securities, daily and
-  monthly Treasury statements of federal revenue and spending, Treasury
-  reporting rates of exchange, and Treasury securities auctions - as JSON, CSV,
-  or XML. Every dataset endpoint responds from a single database table and
-  supports field selection, filtering, sorting, and pagination. No registration,
-  API key, or authentication is required, and the data is in the public domain.
+description: U.S. Treasury Fiscal Data is a free, public source for federal government financial data published by the Bureau of the Fiscal Service. Its REST API serves machine-readable government reports and economic indicators - the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of federal revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions - as JSON, CSV, or XML. Every dataset endpoint responds from a single database table and supports field selection, filtering, sorting, and pagination. No registration, API key, or authentication is required, and the data is in the public domain.
 deliveryModel:
   model: saas
   open_source: false
@@ -70,16 +61,13 @@ apis:
   - type: OpenCollection
     url: collections/fiscaldata.opencollection.json
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
 - aid: fiscaldata:fiscaldata-debt-api
@@ -101,16 +89,13 @@ apis:
   - type: OpenCollection
     url: collections/fiscaldata.opencollection.json
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
 - aid: fiscaldata:fiscaldata-exchange-rates-api
@@ -132,16 +117,13 @@ apis:
   - type: OpenCollection
     url: collections/fiscaldata.opencollection.json
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
 - aid: fiscaldata:fiscaldata-interest-rates-api
@@ -163,16 +145,13 @@ apis:
   - type: OpenCollection
     url: collections/fiscaldata.opencollection.json
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
 - aid: fiscaldata:fiscaldata-monthly-treasury-statement-api
@@ -194,16 +173,13 @@ apis:
   - type: OpenCollection
     url: collections/fiscaldata.opencollection.json
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
 - aid: fiscaldata:fiscaldata-securities-api
@@ -225,18 +201,75 @@ apis:
   - type: OpenCollection
     url: collections/fiscaldata.opencollection.json
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
+    url: https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
+    url: https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government
   - type: APIReference
-    url: >-
-      https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
+    url: https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange
   - type: APIReference
     url: https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query
+- aid: fiscaldata:u-s-treasury-fiscal-data-national-debt-api
+  name: U.S. Treasury Fiscal Data National Debt API
+  description: Federal debt, public debt outstanding, and interest rate data.
+  humanURL: https://fiscaldata.treasury.gov/
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  tags:
+  - National Debt
+  properties:
+  - type: OpenAPI
+    url: openapi/u-s-treasury-fiscal-data-national-debt-api-openapi.yml
+  - type: Documentation
+    url: https://fiscaldata.treasury.gov/api-documentation/
+  - type: GettingStarted
+    url: https://fiscaldata.treasury.gov/api-documentation/
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-debt-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-exchange-rate-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-interest-rate-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-daily-treasury-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-monthly-treasury-record-schema.json
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-ld/treasury-fiscal-data-api-context.jsonld
+  - type: Examples
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/examples/treasury-debt-record-example.json
+  - type: Examples
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/examples/treasury-exchange-rate-record-example.json
+- aid: fiscaldata:u-s-treasury-fiscal-data-treasury-statements-api
+  name: U.S. Treasury Fiscal Data Treasury Statements API
+  description: Daily and monthly Treasury financial statements.
+  humanURL: https://fiscaldata.treasury.gov/
+  baseURL: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  tags:
+  - Treasury Statements
+  properties:
+  - type: OpenAPI
+    url: openapi/u-s-treasury-fiscal-data-treasury-statements-api-openapi.yml
+  - type: Documentation
+    url: https://fiscaldata.treasury.gov/api-documentation/
+  - type: GettingStarted
+    url: https://fiscaldata.treasury.gov/api-documentation/
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-debt-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-exchange-rate-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-interest-rate-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-daily-treasury-record-schema.json
+  - type: JSONSchema
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-schema/treasury-monthly-treasury-record-schema.json
+  - type: JSONLD
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/json-ld/treasury-fiscal-data-api-context.jsonld
+  - type: Examples
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/examples/treasury-debt-record-example.json
+  - type: Examples
+    url: https://raw.githubusercontent.com/api-evangelist/u-s-treasury-fiscal-data/refs/heads/main/examples/treasury-exchange-rate-record-example.json
 common:
 - type: CapabilityMap
   url: capabilities/fiscaldata-capability-edges.yml
