@@ -1,12 +1,9 @@
 {
   "provider": "fiscaldata",
   "sources": [
-    "fiscaldata-daily-treasury-statement-api-openapi.yml",
-    "fiscaldata-debt-api-openapi.yml",
-    "fiscaldata-exchange-rates-api-openapi.yml",
-    "fiscaldata-interest-rates-api-openapi.yml",
-    "fiscaldata-monthly-treasury-statement-api-openapi.yml",
-    "fiscaldata-securities-api-openapi.yml"
+    "_original/fiscaldata-openapi.yml",
+    "_original/u-s-treasury-fiscal-data-national-debt-api-openapi.yml",
+    "_original/u-s-treasury-fiscal-data-treasury-statements-api-openapi.yml"
   ],
   "outputs": [
     "fiscaldata-daily-treasury-statement-api-openapi.yml",
@@ -14,11 +11,26 @@
     "fiscaldata-exchange-rates-api-openapi.yml",
     "fiscaldata-interest-rates-api-openapi.yml",
     "fiscaldata-monthly-treasury-statement-api-openapi.yml",
-    "fiscaldata-securities-api-openapi.yml"
+    "fiscaldata-securities-api-openapi.yml",
+    "fiscaldata-national-debt-api-openapi.yml",
+    "fiscaldata-treasury-statements-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "fiscaldata-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "fiscaldata-daily-treasury-statement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-debt-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-exchange-rates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-interest-rates-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-monthly-treasury-statement-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-national-debt-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-securities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "fiscaldata-treasury-statements-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

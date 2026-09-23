@@ -1,16 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: U.S. Treasury Fiscal Data Daily Treasury Statement API
-  description: 'The U.S. Treasury Fiscal Data API is a free, public, read-only RESTful API from the Bureau of the Fiscal Service that serves federal government financial data - the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions.
-
-
-    The API accepts only GET requests, returns JSON by default (CSV and XML are available via the `format` parameter), and uses standard HTTP response codes. No registration, API key, or authentication is required and the data is in the public domain.
-
-
-    Each endpoint maps to a single database table from a published report (a "dataset"). Every endpoint accepts the same query parameters - `fields` for column selection, `filter` for row filtering, `sort` for ordering, `format` for the response type, and `page[number]` / `page[size]` for pagination. Endpoints are versioned individually as `v1` or `v2`; consult each dataset''s detail page for its current version.
-
-
-    This document models a representative set of the most-requested endpoints. The full catalog of datasets is listed at https://fiscaldata.treasury.gov/api-documentation/.'
+  description: The U.S.
   version: '1.0'
   contact:
     name: U.S. Treasury Fiscal Data
@@ -60,19 +51,6 @@ paths:
         '200':
           $ref: '#/components/responses/DatasetResponse'
 components:
-  responses:
-    DatasetResponse:
-      description: A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DatasetResponse'
-        text/csv:
-          schema:
-            type: string
-        application/xml:
-          schema:
-            type: string
   parameters:
     Sort:
       name: sort
@@ -81,23 +59,11 @@ components:
       description: 'Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`.'
       schema:
         type: string
-    Format:
-      name: format
+    Filter:
+      name: filter
       in: query
       required: false
-      description: Response format. Defaults to JSON.
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        default: json
-    Fields:
-      name: fields
-      in: query
-      required: false
-      description: 'Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`.'
+      description: 'Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`.'
       schema:
         type: string
     PageNumber:
@@ -119,11 +85,23 @@ components:
         minimum: 1
         maximum: 10000
         default: 100
-    Filter:
-      name: filter
+    Format:
+      name: format
       in: query
       required: false
-      description: 'Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`.'
+      description: Response format. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+    Fields:
+      name: fields
+      in: query
+      required: false
+      description: 'Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`.'
       schema:
         type: string
   schemas:
@@ -150,11 +128,13 @@ components:
         first:
           type: string
         prev:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         next:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         last:
           type: string
     Meta:
@@ -185,3 +165,16 @@ components:
         total-pages:
           type: integer
           description: Total number of pages for the query at the current page size.
+  responses:
+    DatasetResponse:
+      description: A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DatasetResponse'
+        text/csv:
+          schema:
+            type: string
+        application/xml:
+          schema:
+            type: string

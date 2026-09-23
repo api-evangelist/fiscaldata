@@ -1,0 +1,477 @@
+# x-archived-from: u-s-treasury-fiscal-data-national-debt-api-openapi.yml
+# x-archived-on: 2026-09-16
+openapi: 3.2.0
+info:
+  title: Treasury Fiscal Data Exchange Rates National Debt API
+  description: The U.S. Treasury Fiscal Data API provides free, open access to federal financial data including national debt, interest rates, exchange rates, and detailed fiscal operations data. No authentication or API key is required. The API uses RESTful principles, accepts GET requests, and returns JSON responses with standardized pagination, filtering, sorting, and field selection across 80+ endpoints covering all major Treasury financial reports.
+  version: '1.0'
+  contact:
+    name: Bureau of the Fiscal Service
+    url: https://fiscaldata.treasury.gov/
+    email: FiscalDataHelp@fiscal.treasury.gov
+  license:
+    name: Public Domain (U.S. Government Work)
+    url: https://fiscaldata.treasury.gov/about-us/
+  x-generated-from: documentation
+servers:
+- url: https://api.fiscaldata.treasury.gov/services/api/fiscal_service
+  description: Treasury Fiscal Data API
+tags:
+- name: National Debt
+  description: Federal debt, public debt outstanding, and interest rate data.
+paths:
+  /v2/accounting/od/debt_to_penny:
+    get:
+      operationId: getDebtToPenny
+      summary: Treasury Fiscal Data Get Debt to the Penny
+      description: Retrieve daily public debt outstanding data including total public debt, debt held by the public, and intragovernmental holdings. Data is updated daily when federal markets are open. The dataset begins January 1993 with approximately 8,000 records.
+      tags:
+      - National Debt
+      parameters:
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful response with debt data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DebtToPennyResponse'
+              examples:
+                GetDebtToPenny200Example:
+                  summary: Default getDebtToPenny 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - record_date: '2026-04-30'
+                      tot_pub_debt_out_amt: '38967833861543.11'
+                      debt_held_public_amt: '31272489865435.88'
+                      intragov_hold_amt: '7695343996107.23'
+                    meta:
+                      count: 1
+                      labels:
+                        record_date: Record Date
+                        tot_pub_debt_out_amt: Total Public Debt Outstanding
+                        debt_held_public_amt: Debt Held by the Public
+                        intragov_hold_amt: Intragovernmental Holdings
+                      total-count: 8298
+                      total-pages: 8298
+                    links:
+                      self: '&page%5Bnumber%5D=1&page%5Bsize%5D=1'
+                      first: '&page%5Bnumber%5D=1&page%5Bsize%5D=1'
+                      prev: null
+                      next: '&page%5Bnumber%5D=2&page%5Bsize%5D=1'
+                      last: '&page%5Bnumber%5D=8298&page%5Bsize%5D=1'
+        '400':
+          description: Bad request. Invalid parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v2/accounting/od/avg_interest_rates:
+    get:
+      operationId: getAvgInterestRates
+      summary: Treasury Fiscal Data Get Average Interest Rates on U.S. Treasury Securities
+      description: Retrieve average interest rates on various U.S. Treasury securities including Treasury bills, notes, bonds, TIPS, and total marketable and non-marketable securities. Data is published monthly.
+      tags:
+      - National Debt
+      parameters:
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful response with interest rate data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterestRateResponse'
+              examples:
+                GetAvgInterestRates200Example:
+                  summary: Default getAvgInterestRates 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - security_desc: Treasury Bills
+                      avg_interest_rate_amt: '3.702'
+                      record_date: '2026-03-31'
+                    meta:
+                      count: 1
+                      total-count: 4929
+                      total-pages: 4929
+                    links:
+                      self: '&page%5Bnumber%5D=1&page%5Bsize%5D=1'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v2/accounting/od/interest_expense:
+    get:
+      operationId: getInterestExpenseDebt
+      summary: Treasury Fiscal Data Get Interest Expense on the Debt Outstanding
+      description: Retrieve monthly interest expense incurred on the federal debt, broken down by debt category (debt held by public, intragovernmental debt).
+      tags:
+      - National Debt
+      parameters:
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful response with interest expense data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFiscalResponse'
+              examples:
+                GetInterestExpenseDebt200Example:
+                  summary: Default getInterestExpenseDebt 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - record_date: '2026-03-31'
+                      expense_categ_desc: Debt Held by the Public
+                      gross_interest_expense_amt: '87000000000.00'
+                      net_interest_expense_amt: '85000000000.00'
+                    meta:
+                      count: 1
+                      total-count: 3600
+                      total-pages: 3600
+                    links:
+                      self: '&page%5Bnumber%5D=1&page%5Bsize%5D=1'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /v1/accounting/od/gift_contributions:
+    get:
+      operationId: getGiftContributionsDebt
+      summary: Treasury Fiscal Data Get Gift Contributions to Reduce the Public Debt
+      description: Retrieve data on voluntary contributions made to the U.S. Treasury to help reduce the public debt. Records individual and organizational gifts received since 1996.
+      tags:
+      - National Debt
+      parameters:
+      - $ref: '#/components/parameters/fields'
+      - $ref: '#/components/parameters/filter'
+      - $ref: '#/components/parameters/sort'
+      - $ref: '#/components/parameters/pageNumber'
+      - $ref: '#/components/parameters/pageSize'
+      - $ref: '#/components/parameters/format'
+      responses:
+        '200':
+          description: Successful response with gift contribution data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFiscalResponse'
+              examples:
+                GetGiftContributionsDebt200Example:
+                  summary: Default getGiftContributionsDebt 200 response
+                  x-microcks-default: true
+                  value:
+                    data:
+                    - contribution_fiscal_yr: '2026'
+                      contribution_month: '03'
+                      number_of_contributions: 45
+                      total_contributions_amt: '185000.00'
+                      record_date: '2026-03-31'
+                    meta:
+                      count: 1
+                      total-count: 360
+                      total-pages: 360
+                    links:
+                      self: '&page%5Bnumber%5D=1&page%5Bsize%5D=1'
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  schemas:
+    DebtRecord:
+      title: DebtRecord
+      type: object
+      description: A single record from the Debt to the Penny dataset.
+      properties:
+        record_date:
+          type: string
+          format: date
+          description: Date of the debt calculation in YYYY-MM-DD format.
+          example: '2026-04-30'
+        tot_pub_debt_out_amt:
+          type: string
+          description: Total public debt outstanding in U.S. dollars.
+          example: '38967833861543.11'
+        debt_held_public_amt:
+          type: string
+          description: Portion of debt held by the public in U.S. dollars.
+          example: '31272489865435.88'
+        intragov_hold_amt:
+          type: string
+          description: Intragovernmental holdings in U.S. dollars.
+          example: '7695343996107.23'
+        src_line_nbr:
+          type: string
+          description: Source line number.
+          example: '1'
+        record_fiscal_year:
+          type: string
+          description: Federal fiscal year of the record.
+          example: '2026'
+        record_fiscal_quarter:
+          type: string
+          description: Federal fiscal quarter of the record.
+          example: Q2
+        record_calendar_year:
+          type: string
+          description: Calendar year of the record.
+          example: '2026'
+        record_calendar_quarter:
+          type: string
+          description: Calendar quarter of the record.
+          example: Q2
+        record_calendar_month:
+          type: string
+          description: Calendar month of the record.
+          example: '04'
+        record_calendar_day:
+          type: string
+          description: Calendar day of the record.
+          example: '30'
+    DebtToPennyResponse:
+      title: DebtToPennyResponse
+      type: object
+      description: Response from the Debt to the Penny endpoint.
+      properties:
+        data:
+          type: array
+          description: Array of debt records.
+          items:
+            $ref: '#/components/schemas/DebtRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
+    FiscalMeta:
+      title: FiscalMeta
+      type: object
+      description: Metadata included in all Treasury Fiscal Data API responses.
+      properties:
+        count:
+          type: integer
+          description: Number of records in this response page.
+          example: 100
+        labels:
+          type: object
+          description: Human-readable labels for each field in the data.
+          additionalProperties:
+            type: string
+          example:
+            record_date: Record Date
+            tot_pub_debt_out_amt: Total Public Debt Outstanding
+        dataTypes:
+          type: object
+          description: Data type for each field (DATE, STRING, CURRENCY, NUMBER, PERCENTAGE).
+          additionalProperties:
+            type: string
+          example:
+            record_date: DATE
+            tot_pub_debt_out_amt: CURRENCY
+        dataFormats:
+          type: object
+          description: Display format for each field.
+          additionalProperties:
+            type: string
+          example:
+            record_date: YYYY-MM-DD
+        total-count:
+          type: integer
+          description: Total number of records matching the query.
+          example: 8298
+        total-pages:
+          type: integer
+          description: Total number of pages available.
+          example: 83
+    InterestRateResponse:
+      title: InterestRateResponse
+      type: object
+      description: Response from the Average Interest Rates endpoint.
+      properties:
+        data:
+          type: array
+          description: Array of interest rate records.
+          items:
+            $ref: '#/components/schemas/InterestRateRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Error response from the Treasury Fiscal Data API.
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: Bad Request
+        message:
+          type: string
+          description: Detailed error message.
+          example: Invalid filter parameter syntax.
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 400
+    GenericFiscalResponse:
+      title: GenericFiscalResponse
+      type: object
+      description: Generic Treasury Fiscal Data API response for datasets not covered by specific schemas.
+      properties:
+        data:
+          type: array
+          description: Array of data records. Fields vary by dataset.
+          items:
+            type: object
+            additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
+    InterestRateRecord:
+      title: InterestRateRecord
+      type: object
+      description: A single interest rate record for a Treasury security type.
+      properties:
+        security_desc:
+          type: string
+          description: Description of the Treasury security type.
+          example: Treasury Bills
+        security_type_desc:
+          type: string
+          description: Broader security type (Marketable or Nonmarketable).
+          example: Marketable
+        avg_interest_rate_amt:
+          type: string
+          description: Average interest rate as a percentage.
+          example: '3.702'
+        record_date:
+          type: string
+          format: date
+          description: Record date in YYYY-MM-DD format.
+          example: '2026-03-31'
+    FiscalLinks:
+      title: FiscalLinks
+      type: object
+      description: Pagination links for navigating result pages.
+      properties:
+        self:
+          type: string
+          description: URL parameters for the current page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        first:
+          type: string
+          description: URL parameters for the first page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        prev:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the previous page (null if on first page).
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the next page (null if on last page).
+          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
+        last:
+          type: string
+          description: URL parameters for the last page.
+          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
+  parameters:
+    sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
+      schema:
+        type: string
+        example: -record_date
+    pageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of records per page (max 10000).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
+        example: 100
+    pageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: Page number for pagination (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        example: 1
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
+      schema:
+        type: string
+        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter criteria using format field:operator:value. Multiple filters separated by commas. Operators: eq (equals), lt (less than), lte (less than or equal), gt (greater than), gte (greater than or equal), in (in list). Example: filter=record_date:gte:2025-01-01,record_date:lte:2025-12-31'
+      schema:
+        type: string
+        example: record_date:gte:2025-01-01,record_date:lte:2025-12-31
+    format:
+      name: format
+      in: query
+      required: false
+      description: 'Response format. Options: json (default), csv, xml.'
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+        example: json
