@@ -115,37 +115,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ErrorResponse:
-      title: ErrorResponse
-      type: object
-      description: Error response from the Treasury Fiscal Data API.
-      properties:
-        error:
-          type: string
-          description: Error code.
-          example: Bad Request
-        message:
-          type: string
-          description: Detailed error message.
-          example: Invalid filter parameter syntax.
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 400
-    MonthlyTreasuryStatementResponse:
-      title: MonthlyTreasuryStatementResponse
-      type: object
-      description: Response from the Monthly Treasury Statement endpoint.
-      properties:
-        data:
-          type: array
-          description: Array of MTS records.
-          items:
-            $ref: '#/components/schemas/MonthlyTreasuryRecord'
-        meta:
-          $ref: '#/components/schemas/FiscalMeta'
-        links:
-          $ref: '#/components/schemas/FiscalLinks'
     DailyTreasuryRecord:
       title: DailyTreasuryRecord
       type: object
@@ -202,35 +171,6 @@ components:
           type: string
           description: Prior year fiscal year to date amount.
           example: '1180000000000.00'
-    FiscalLinks:
-      title: FiscalLinks
-      type: object
-      description: Pagination links for navigating result pages.
-      properties:
-        self:
-          type: string
-          description: URL parameters for the current page.
-          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
-        first:
-          type: string
-          description: URL parameters for the first page.
-          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
-        prev:
-          type:
-          - string
-          - 'null'
-          description: URL parameters for the previous page (null if on first page).
-          example: null
-        next:
-          type:
-          - string
-          - 'null'
-          description: URL parameters for the next page (null if on last page).
-          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
-        last:
-          type: string
-          description: URL parameters for the last page.
-          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
     DailyTreasuryStatementResponse:
       title: DailyTreasuryStatementResponse
       type: object
@@ -285,6 +225,66 @@ components:
           type: integer
           description: Total number of pages available.
           example: 83
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Error response from the Treasury Fiscal Data API.
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: Bad Request
+        message:
+          type: string
+          description: Detailed error message.
+          example: Invalid filter parameter syntax.
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 400
+    FiscalLinks:
+      title: FiscalLinks
+      type: object
+      description: Pagination links for navigating result pages.
+      properties:
+        self:
+          type: string
+          description: URL parameters for the current page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        first:
+          type: string
+          description: URL parameters for the first page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        prev:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the previous page (null if on first page).
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the next page (null if on last page).
+          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
+        last:
+          type: string
+          description: URL parameters for the last page.
+          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
+    MonthlyTreasuryStatementResponse:
+      title: MonthlyTreasuryStatementResponse
+      type: object
+      description: Response from the Monthly Treasury Statement endpoint.
+      properties:
+        data:
+          type: array
+          description: Array of MTS records.
+          items:
+            $ref: '#/components/schemas/MonthlyTreasuryRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
   parameters:
     format:
       name: format
@@ -299,6 +299,14 @@ components:
         - xml
         default: json
         example: json
+    sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
+      schema:
+        type: string
+        example: -record_date
     filter:
       name: filter
       in: query
@@ -318,6 +326,14 @@ components:
         maximum: 10000
         default: 100
         example: 100
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
+      schema:
+        type: string
+        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
     pageNumber:
       name: page[number]
       in: query
@@ -328,19 +344,3 @@ components:
         minimum: 1
         default: 1
         example: 1
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
-      schema:
-        type: string
-        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
-    sort:
-      name: sort
-      in: query
-      required: false
-      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
-      schema:
-        type: string
-        example: -record_date

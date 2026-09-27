@@ -51,59 +51,6 @@ paths:
         '200':
           $ref: '#/components/responses/DatasetResponse'
 components:
-  parameters:
-    Sort:
-      name: sort
-      in: query
-      required: false
-      description: 'Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`.'
-      schema:
-        type: string
-    Filter:
-      name: filter
-      in: query
-      required: false
-      description: 'Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`.'
-      schema:
-        type: string
-    PageNumber:
-      name: page[number]
-      in: query
-      required: false
-      description: The page of results to return (1-based).
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-    PageSize:
-      name: page[size]
-      in: query
-      required: false
-      description: Number of results per page. Maximum 10000.
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 10000
-        default: 100
-    Format:
-      name: format
-      in: query
-      required: false
-      description: Response format. Defaults to JSON.
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        default: json
-    Fields:
-      name: fields
-      in: query
-      required: false
-      description: 'Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`.'
-      schema:
-        type: string
   schemas:
     DatasetResponse:
       type: object
@@ -165,6 +112,59 @@ components:
         total-pages:
           type: integer
           description: Total number of pages for the query at the current page size.
+  parameters:
+    Filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter rows using `field:operator:value`, comma-separated for multiple filters (AND). Operators are `lt`, `lte`, `gt`, `gte`, `eq`, and `in` (values in parentheses). Example: `record_date:gte:2020-01-01,security_desc:eq:Treasury Bills`.'
+      schema:
+        type: string
+    Fields:
+      name: fields
+      in: query
+      required: false
+      description: 'Comma-separated list of fields (columns) to return. Omit to return all fields for the dataset. Example: `record_date,tot_pub_debt_out_amt`.'
+      schema:
+        type: string
+    Sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated fields to sort by, ascending by default; prefix a field with `-` for descending. Example: `-record_date`.'
+      schema:
+        type: string
+    PageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: The page of results to return (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+    Format:
+      name: format
+      in: query
+      required: false
+      description: Response format. Defaults to JSON.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+    PageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of results per page. Maximum 10000.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
   responses:
     DatasetResponse:
       description: A page of dataset records with metadata and pagination links. When `format=csv` or `format=xml`, the body is CSV or XML instead of JSON.
