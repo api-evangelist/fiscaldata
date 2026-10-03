@@ -114,6 +114,65 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    pageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of records per page (max 10000).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
+        example: 100
+    pageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: Page number for pagination (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        example: 1
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter criteria using format field:operator:value. Multiple filters separated by commas. Operators: eq (equals), lt (less than), lte (less than or equal), gt (greater than), gte (greater than or equal), in (in list). Example: filter=record_date:gte:2025-01-01,record_date:lte:2025-12-31'
+      schema:
+        type: string
+        example: record_date:gte:2025-01-01,record_date:lte:2025-12-31
+    format:
+      name: format
+      in: query
+      required: false
+      description: 'Response format. Options: json (default), csv, xml.'
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+        example: json
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
+      schema:
+        type: string
+        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
+    sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
+      schema:
+        type: string
+        example: -record_date
   schemas:
     DailyTreasuryRecord:
       title: DailyTreasuryRecord
@@ -145,46 +204,6 @@ components:
           type: string
           description: Opening balance for the fiscal year.
           example: '700000000000.00'
-    MonthlyTreasuryRecord:
-      title: MonthlyTreasuryRecord
-      type: object
-      description: A single record from the Monthly Treasury Statement.
-      properties:
-        record_date:
-          type: string
-          format: date
-          description: Record date (last day of the month).
-          example: '2026-03-31'
-        classification_desc:
-          type: string
-          description: Classification description (e.g., budget category).
-          example: Individual Income Taxes
-        current_month_rcpt_outly_amt:
-          type: string
-          description: Current month receipts or outlays in U.S. dollars.
-          example: '185000000000.00'
-        current_fytd_rcpt_outly_amt:
-          type: string
-          description: Fiscal year to date receipts or outlays in U.S. dollars.
-          example: '1250000000000.00'
-        prior_yr_fytd_rcpt_outly_amt:
-          type: string
-          description: Prior year fiscal year to date amount.
-          example: '1180000000000.00'
-    DailyTreasuryStatementResponse:
-      title: DailyTreasuryStatementResponse
-      type: object
-      description: Response from the Daily Treasury Statement endpoint.
-      properties:
-        data:
-          type: array
-          description: Array of DTS records.
-          items:
-            $ref: '#/components/schemas/DailyTreasuryRecord'
-        meta:
-          $ref: '#/components/schemas/FiscalMeta'
-        links:
-          $ref: '#/components/schemas/FiscalLinks'
     FiscalMeta:
       title: FiscalMeta
       type: object
@@ -225,23 +244,20 @@ components:
           type: integer
           description: Total number of pages available.
           example: 83
-    ErrorResponse:
-      title: ErrorResponse
+    MonthlyTreasuryStatementResponse:
+      title: MonthlyTreasuryStatementResponse
       type: object
-      description: Error response from the Treasury Fiscal Data API.
+      description: Response from the Monthly Treasury Statement endpoint.
       properties:
-        error:
-          type: string
-          description: Error code.
-          example: Bad Request
-        message:
-          type: string
-          description: Detailed error message.
-          example: Invalid filter parameter syntax.
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 400
+        data:
+          type: array
+          description: Array of MTS records.
+          items:
+            $ref: '#/components/schemas/MonthlyTreasuryRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
     FiscalLinks:
       title: FiscalLinks
       type: object
@@ -271,76 +287,60 @@ components:
           type: string
           description: URL parameters for the last page.
           example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
-    MonthlyTreasuryStatementResponse:
-      title: MonthlyTreasuryStatementResponse
+    MonthlyTreasuryRecord:
+      title: MonthlyTreasuryRecord
       type: object
-      description: Response from the Monthly Treasury Statement endpoint.
+      description: A single record from the Monthly Treasury Statement.
+      properties:
+        record_date:
+          type: string
+          format: date
+          description: Record date (last day of the month).
+          example: '2026-03-31'
+        classification_desc:
+          type: string
+          description: Classification description (e.g., budget category).
+          example: Individual Income Taxes
+        current_month_rcpt_outly_amt:
+          type: string
+          description: Current month receipts or outlays in U.S. dollars.
+          example: '185000000000.00'
+        current_fytd_rcpt_outly_amt:
+          type: string
+          description: Fiscal year to date receipts or outlays in U.S. dollars.
+          example: '1250000000000.00'
+        prior_yr_fytd_rcpt_outly_amt:
+          type: string
+          description: Prior year fiscal year to date amount.
+          example: '1180000000000.00'
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Error response from the Treasury Fiscal Data API.
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: Bad Request
+        message:
+          type: string
+          description: Detailed error message.
+          example: Invalid filter parameter syntax.
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 400
+    DailyTreasuryStatementResponse:
+      title: DailyTreasuryStatementResponse
+      type: object
+      description: Response from the Daily Treasury Statement endpoint.
       properties:
         data:
           type: array
-          description: Array of MTS records.
+          description: Array of DTS records.
           items:
-            $ref: '#/components/schemas/MonthlyTreasuryRecord'
+            $ref: '#/components/schemas/DailyTreasuryRecord'
         meta:
           $ref: '#/components/schemas/FiscalMeta'
         links:
           $ref: '#/components/schemas/FiscalLinks'
-  parameters:
-    format:
-      name: format
-      in: query
-      required: false
-      description: 'Response format. Options: json (default), csv, xml.'
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        default: json
-        example: json
-    sort:
-      name: sort
-      in: query
-      required: false
-      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
-      schema:
-        type: string
-        example: -record_date
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: 'Filter criteria using format field:operator:value. Multiple filters separated by commas. Operators: eq (equals), lt (less than), lte (less than or equal), gt (greater than), gte (greater than or equal), in (in list). Example: filter=record_date:gte:2025-01-01,record_date:lte:2025-12-31'
-      schema:
-        type: string
-        example: record_date:gte:2025-01-01,record_date:lte:2025-12-31
-    pageSize:
-      name: page[size]
-      in: query
-      required: false
-      description: Number of records per page (max 10000).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 10000
-        default: 100
-        example: 100
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
-      schema:
-        type: string
-        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
-    pageNumber:
-      name: page[number]
-      in: query
-      required: false
-      description: Page number for pagination (1-based).
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        example: 1
