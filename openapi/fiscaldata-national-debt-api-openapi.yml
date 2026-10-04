@@ -212,7 +212,81 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  parameters:
+    pageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of records per page (max 10000).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
+        example: 100
+    sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
+      schema:
+        type: string
+        example: -record_date
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
+      schema:
+        type: string
+        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
+    pageNumber:
+      name: page[number]
+      in: query
+      required: false
+      description: Page number for pagination (1-based).
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+        example: 1
+    filter:
+      name: filter
+      in: query
+      required: false
+      description: 'Filter criteria using format field:operator:value. Multiple filters separated by commas. Operators: eq (equals), lt (less than), lte (less than or equal), gt (greater than), gte (greater than or equal), in (in list). Example: filter=record_date:gte:2025-01-01,record_date:lte:2025-12-31'
+      schema:
+        type: string
+        example: record_date:gte:2025-01-01,record_date:lte:2025-12-31
+    format:
+      name: format
+      in: query
+      required: false
+      description: 'Response format. Options: json (default), csv, xml.'
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+        example: json
   schemas:
+    GenericFiscalResponse:
+      title: GenericFiscalResponse
+      type: object
+      description: Generic Treasury Fiscal Data API response for datasets not covered by specific schemas.
+      properties:
+        data:
+          type: array
+          description: Array of data records. Fields vary by dataset.
+          items:
+            type: object
+            additionalProperties: true
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
     InterestRateResponse:
       title: InterestRateResponse
       type: object
@@ -227,6 +301,35 @@ components:
           $ref: '#/components/schemas/FiscalMeta'
         links:
           $ref: '#/components/schemas/FiscalLinks'
+    FiscalLinks:
+      title: FiscalLinks
+      type: object
+      description: Pagination links for navigating result pages.
+      properties:
+        self:
+          type: string
+          description: URL parameters for the current page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        first:
+          type: string
+          description: URL parameters for the first page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        prev:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the previous page (null if on first page).
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the next page (null if on last page).
+          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
+        last:
+          type: string
+          description: URL parameters for the last page.
+          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
     FiscalMeta:
       title: FiscalMeta
       type: object
@@ -267,17 +370,16 @@ components:
           type: integer
           description: Total number of pages available.
           example: 83
-    GenericFiscalResponse:
-      title: GenericFiscalResponse
+    DebtToPennyResponse:
+      title: DebtToPennyResponse
       type: object
-      description: Generic Treasury Fiscal Data API response for datasets not covered by specific schemas.
+      description: Response from the Debt to the Penny endpoint.
       properties:
         data:
           type: array
-          description: Array of data records. Fields vary by dataset.
+          description: Array of debt records.
           items:
-            type: object
-            additionalProperties: true
+            $ref: '#/components/schemas/DebtRecord'
         meta:
           $ref: '#/components/schemas/FiscalMeta'
         links:
@@ -304,66 +406,6 @@ components:
           format: date
           description: Record date in YYYY-MM-DD format.
           example: '2026-03-31'
-    DebtToPennyResponse:
-      title: DebtToPennyResponse
-      type: object
-      description: Response from the Debt to the Penny endpoint.
-      properties:
-        data:
-          type: array
-          description: Array of debt records.
-          items:
-            $ref: '#/components/schemas/DebtRecord'
-        meta:
-          $ref: '#/components/schemas/FiscalMeta'
-        links:
-          $ref: '#/components/schemas/FiscalLinks'
-    FiscalLinks:
-      title: FiscalLinks
-      type: object
-      description: Pagination links for navigating result pages.
-      properties:
-        self:
-          type: string
-          description: URL parameters for the current page.
-          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
-        first:
-          type: string
-          description: URL parameters for the first page.
-          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
-        prev:
-          type:
-          - string
-          - 'null'
-          description: URL parameters for the previous page (null if on first page).
-          example: null
-        next:
-          type:
-          - string
-          - 'null'
-          description: URL parameters for the next page (null if on last page).
-          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
-        last:
-          type: string
-          description: URL parameters for the last page.
-          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
-    ErrorResponse:
-      title: ErrorResponse
-      type: object
-      description: Error response from the Treasury Fiscal Data API.
-      properties:
-        error:
-          type: string
-          description: Error code.
-          example: Bad Request
-        message:
-          type: string
-          description: Detailed error message.
-          example: Invalid filter parameter syntax.
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 400
     DebtRecord:
       title: DebtRecord
       type: object
@@ -414,62 +456,20 @@ components:
           type: string
           description: Calendar day of the record.
           example: '30'
-  parameters:
-    pageSize:
-      name: page[size]
-      in: query
-      required: false
-      description: Number of records per page (max 10000).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 10000
-        default: 100
-        example: 100
-    pageNumber:
-      name: page[number]
-      in: query
-      required: false
-      description: Page number for pagination (1-based).
-      schema:
-        type: integer
-        minimum: 1
-        default: 1
-        example: 1
-    filter:
-      name: filter
-      in: query
-      required: false
-      description: 'Filter criteria using format field:operator:value. Multiple filters separated by commas. Operators: eq (equals), lt (less than), lte (less than or equal), gt (greater than), gte (greater than or equal), in (in list). Example: filter=record_date:gte:2025-01-01,record_date:lte:2025-12-31'
-      schema:
-        type: string
-        example: record_date:gte:2025-01-01,record_date:lte:2025-12-31
-    format:
-      name: format
-      in: query
-      required: false
-      description: 'Response format. Options: json (default), csv, xml.'
-      schema:
-        type: string
-        enum:
-        - json
-        - csv
-        - xml
-        default: json
-        example: json
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
-      schema:
-        type: string
-        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
-    sort:
-      name: sort
-      in: query
-      required: false
-      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
-      schema:
-        type: string
-        example: -record_date
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Error response from the Treasury Fiscal Data API.
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: Bad Request
+        message:
+          type: string
+          description: Detailed error message.
+          example: Invalid filter parameter syntax.
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 400

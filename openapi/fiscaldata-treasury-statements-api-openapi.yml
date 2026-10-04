@@ -126,6 +126,22 @@ components:
         maximum: 10000
         default: 100
         example: 100
+    sort:
+      name: sort
+      in: query
+      required: false
+      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
+      schema:
+        type: string
+        example: -record_date
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
+      schema:
+        type: string
+        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
     pageNumber:
       name: page[number]
       in: query
@@ -157,53 +173,50 @@ components:
         - xml
         default: json
         example: json
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
-      schema:
-        type: string
-        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
-    sort:
-      name: sort
-      in: query
-      required: false
-      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
-      schema:
-        type: string
-        example: -record_date
   schemas:
-    DailyTreasuryRecord:
-      title: DailyTreasuryRecord
+    DailyTreasuryStatementResponse:
+      title: DailyTreasuryStatementResponse
       type: object
-      description: A single record from the Daily Treasury Statement.
+      description: Response from the Daily Treasury Statement endpoint.
       properties:
-        record_date:
+        data:
+          type: array
+          description: Array of DTS records.
+          items:
+            $ref: '#/components/schemas/DailyTreasuryRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
+    FiscalLinks:
+      title: FiscalLinks
+      type: object
+      description: Pagination links for navigating result pages.
+      properties:
+        self:
           type: string
-          format: date
-          description: Date of the treasury statement.
-          example: '2026-04-30'
-        account_type:
+          description: URL parameters for the current page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        first:
           type: string
-          description: Treasury account type.
-          example: Federal Reserve Account
-        open_today_bal:
+          description: URL parameters for the first page.
+          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
+        prev:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the previous page (null if on first page).
+          example: null
+        next:
+          type:
+          - string
+          - 'null'
+          description: URL parameters for the next page (null if on last page).
+          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
+        last:
           type: string
-          description: Opening balance for the day in U.S. dollars.
-          example: '850123456789.00'
-        close_today_bal:
-          type: string
-          description: Closing balance for the day in U.S. dollars.
-          example: '845678901234.00'
-        open_mo_bal:
-          type: string
-          description: Opening balance for the month.
-          example: '750000000000.00'
-        open_fy_bal:
-          type: string
-          description: Opening balance for the fiscal year.
-          example: '700000000000.00'
+          description: URL parameters for the last page.
+          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
     FiscalMeta:
       title: FiscalMeta
       type: object
@@ -244,49 +257,36 @@ components:
           type: integer
           description: Total number of pages available.
           example: 83
-    MonthlyTreasuryStatementResponse:
-      title: MonthlyTreasuryStatementResponse
+    DailyTreasuryRecord:
+      title: DailyTreasuryRecord
       type: object
-      description: Response from the Monthly Treasury Statement endpoint.
+      description: A single record from the Daily Treasury Statement.
       properties:
-        data:
-          type: array
-          description: Array of MTS records.
-          items:
-            $ref: '#/components/schemas/MonthlyTreasuryRecord'
-        meta:
-          $ref: '#/components/schemas/FiscalMeta'
-        links:
-          $ref: '#/components/schemas/FiscalLinks'
-    FiscalLinks:
-      title: FiscalLinks
-      type: object
-      description: Pagination links for navigating result pages.
-      properties:
-        self:
+        record_date:
           type: string
-          description: URL parameters for the current page.
-          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
-        first:
+          format: date
+          description: Date of the treasury statement.
+          example: '2026-04-30'
+        account_type:
           type: string
-          description: URL parameters for the first page.
-          example: '&page%5Bnumber%5D=1&page%5Bsize%5D=100'
-        prev:
-          type:
-          - string
-          - 'null'
-          description: URL parameters for the previous page (null if on first page).
-          example: null
-        next:
-          type:
-          - string
-          - 'null'
-          description: URL parameters for the next page (null if on last page).
-          example: '&page%5Bnumber%5D=2&page%5Bsize%5D=100'
-        last:
+          description: Treasury account type.
+          example: Federal Reserve Account
+        open_today_bal:
           type: string
-          description: URL parameters for the last page.
-          example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
+          description: Opening balance for the day in U.S. dollars.
+          example: '850123456789.00'
+        close_today_bal:
+          type: string
+          description: Closing balance for the day in U.S. dollars.
+          example: '845678901234.00'
+        open_mo_bal:
+          type: string
+          description: Opening balance for the month.
+          example: '750000000000.00'
+        open_fy_bal:
+          type: string
+          description: Opening balance for the fiscal year.
+          example: '700000000000.00'
     MonthlyTreasuryRecord:
       title: MonthlyTreasuryRecord
       type: object
@@ -313,6 +313,20 @@ components:
           type: string
           description: Prior year fiscal year to date amount.
           example: '1180000000000.00'
+    MonthlyTreasuryStatementResponse:
+      title: MonthlyTreasuryStatementResponse
+      type: object
+      description: Response from the Monthly Treasury Statement endpoint.
+      properties:
+        data:
+          type: array
+          description: Array of MTS records.
+          items:
+            $ref: '#/components/schemas/MonthlyTreasuryRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
     ErrorResponse:
       title: ErrorResponse
       type: object
@@ -330,17 +344,3 @@ components:
           type: integer
           description: HTTP status code.
           example: 400
-    DailyTreasuryStatementResponse:
-      title: DailyTreasuryStatementResponse
-      type: object
-      description: Response from the Daily Treasury Statement endpoint.
-      properties:
-        data:
-          type: array
-          description: Array of DTS records.
-          items:
-            $ref: '#/components/schemas/DailyTreasuryRecord'
-        meta:
-          $ref: '#/components/schemas/FiscalMeta'
-        links:
-          $ref: '#/components/schemas/FiscalLinks'
