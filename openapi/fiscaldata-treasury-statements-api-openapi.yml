@@ -115,33 +115,19 @@ paths:
         dispatcher: FALLBACK
 components:
   parameters:
-    pageSize:
-      name: page[size]
+    format:
+      name: format
       in: query
       required: false
-      description: Number of records per page (max 10000).
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 10000
-        default: 100
-        example: 100
-    sort:
-      name: sort
-      in: query
-      required: false
-      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
+      description: 'Response format. Options: json (default), csv, xml.'
       schema:
         type: string
-        example: -record_date
-    fields:
-      name: fields
-      in: query
-      required: false
-      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
-      schema:
-        type: string
-        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
+        enum:
+        - json
+        - csv
+        - xml
+        default: json
+        example: json
     pageNumber:
       name: page[number]
       in: query
@@ -160,20 +146,135 @@ components:
       schema:
         type: string
         example: record_date:gte:2025-01-01,record_date:lte:2025-12-31
-    format:
-      name: format
+    sort:
+      name: sort
       in: query
       required: false
-      description: 'Response format. Options: json (default), csv, xml.'
+      description: 'Comma-separated list of field names to sort by. Prefix with minus (-) for descending order. Example: sort=-record_date,security_desc'
       schema:
         type: string
-        enum:
-        - json
-        - csv
-        - xml
-        default: json
-        example: json
+        example: -record_date
+    fields:
+      name: fields
+      in: query
+      required: false
+      description: Comma-separated list of field names to include in the response. Use to limit output to specific columns (e.g., fields=record_date,tot_pub_debt_out_amt).
+      schema:
+        type: string
+        example: record_date,tot_pub_debt_out_amt,debt_held_public_amt
+    pageSize:
+      name: page[size]
+      in: query
+      required: false
+      description: Number of records per page (max 10000).
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 10000
+        default: 100
+        example: 100
   schemas:
+    DailyTreasuryRecord:
+      title: DailyTreasuryRecord
+      type: object
+      description: A single record from the Daily Treasury Statement.
+      properties:
+        record_date:
+          type: string
+          format: date
+          description: Date of the treasury statement.
+          example: '2026-04-30'
+        account_type:
+          type: string
+          description: Treasury account type.
+          example: Federal Reserve Account
+        open_today_bal:
+          type: string
+          description: Opening balance for the day in U.S. dollars.
+          example: '850123456789.00'
+        close_today_bal:
+          type: string
+          description: Closing balance for the day in U.S. dollars.
+          example: '845678901234.00'
+        open_mo_bal:
+          type: string
+          description: Opening balance for the month.
+          example: '750000000000.00'
+        open_fy_bal:
+          type: string
+          description: Opening balance for the fiscal year.
+          example: '700000000000.00'
+    MonthlyTreasuryStatementResponse:
+      title: MonthlyTreasuryStatementResponse
+      type: object
+      description: Response from the Monthly Treasury Statement endpoint.
+      properties:
+        data:
+          type: array
+          description: Array of MTS records.
+          items:
+            $ref: '#/components/schemas/MonthlyTreasuryRecord'
+        meta:
+          $ref: '#/components/schemas/FiscalMeta'
+        links:
+          $ref: '#/components/schemas/FiscalLinks'
+    FiscalMeta:
+      title: FiscalMeta
+      type: object
+      description: Metadata included in all Treasury Fiscal Data API responses.
+      properties:
+        count:
+          type: integer
+          description: Number of records in this response page.
+          example: 100
+        labels:
+          type: object
+          description: Human-readable labels for each field in the data.
+          additionalProperties:
+            type: string
+          example:
+            record_date: Record Date
+            tot_pub_debt_out_amt: Total Public Debt Outstanding
+        dataTypes:
+          type: object
+          description: Data type for each field (DATE, STRING, CURRENCY, NUMBER, PERCENTAGE).
+          additionalProperties:
+            type: string
+          example:
+            record_date: DATE
+            tot_pub_debt_out_amt: CURRENCY
+        dataFormats:
+          type: object
+          description: Display format for each field.
+          additionalProperties:
+            type: string
+          example:
+            record_date: YYYY-MM-DD
+        total-count:
+          type: integer
+          description: Total number of records matching the query.
+          example: 8298
+        total-pages:
+          type: integer
+          description: Total number of pages available.
+          example: 83
+    ErrorResponse:
+      title: ErrorResponse
+      type: object
+      description: Error response from the Treasury Fiscal Data API.
+      properties:
+        error:
+          type: string
+          description: Error code.
+          example: Bad Request
+        message:
+          type: string
+          description: Detailed error message.
+          example: Invalid filter parameter syntax.
+        status:
+          type: integer
+          description: HTTP status code.
+          example: 400
     DailyTreasuryStatementResponse:
       title: DailyTreasuryStatementResponse
       type: object
@@ -217,76 +318,6 @@ components:
           type: string
           description: URL parameters for the last page.
           example: '&page%5Bnumber%5D=83&page%5Bsize%5D=100'
-    FiscalMeta:
-      title: FiscalMeta
-      type: object
-      description: Metadata included in all Treasury Fiscal Data API responses.
-      properties:
-        count:
-          type: integer
-          description: Number of records in this response page.
-          example: 100
-        labels:
-          type: object
-          description: Human-readable labels for each field in the data.
-          additionalProperties:
-            type: string
-          example:
-            record_date: Record Date
-            tot_pub_debt_out_amt: Total Public Debt Outstanding
-        dataTypes:
-          type: object
-          description: Data type for each field (DATE, STRING, CURRENCY, NUMBER, PERCENTAGE).
-          additionalProperties:
-            type: string
-          example:
-            record_date: DATE
-            tot_pub_debt_out_amt: CURRENCY
-        dataFormats:
-          type: object
-          description: Display format for each field.
-          additionalProperties:
-            type: string
-          example:
-            record_date: YYYY-MM-DD
-        total-count:
-          type: integer
-          description: Total number of records matching the query.
-          example: 8298
-        total-pages:
-          type: integer
-          description: Total number of pages available.
-          example: 83
-    DailyTreasuryRecord:
-      title: DailyTreasuryRecord
-      type: object
-      description: A single record from the Daily Treasury Statement.
-      properties:
-        record_date:
-          type: string
-          format: date
-          description: Date of the treasury statement.
-          example: '2026-04-30'
-        account_type:
-          type: string
-          description: Treasury account type.
-          example: Federal Reserve Account
-        open_today_bal:
-          type: string
-          description: Opening balance for the day in U.S. dollars.
-          example: '850123456789.00'
-        close_today_bal:
-          type: string
-          description: Closing balance for the day in U.S. dollars.
-          example: '845678901234.00'
-        open_mo_bal:
-          type: string
-          description: Opening balance for the month.
-          example: '750000000000.00'
-        open_fy_bal:
-          type: string
-          description: Opening balance for the fiscal year.
-          example: '700000000000.00'
     MonthlyTreasuryRecord:
       title: MonthlyTreasuryRecord
       type: object
@@ -313,34 +344,3 @@ components:
           type: string
           description: Prior year fiscal year to date amount.
           example: '1180000000000.00'
-    MonthlyTreasuryStatementResponse:
-      title: MonthlyTreasuryStatementResponse
-      type: object
-      description: Response from the Monthly Treasury Statement endpoint.
-      properties:
-        data:
-          type: array
-          description: Array of MTS records.
-          items:
-            $ref: '#/components/schemas/MonthlyTreasuryRecord'
-        meta:
-          $ref: '#/components/schemas/FiscalMeta'
-        links:
-          $ref: '#/components/schemas/FiscalLinks'
-    ErrorResponse:
-      title: ErrorResponse
-      type: object
-      description: Error response from the Treasury Fiscal Data API.
-      properties:
-        error:
-          type: string
-          description: Error code.
-          example: Bad Request
-        message:
-          type: string
-          description: Detailed error message.
-          example: Invalid filter parameter syntax.
-        status:
-          type: integer
-          description: HTTP status code.
-          example: 400
