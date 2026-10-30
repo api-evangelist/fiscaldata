@@ -1,4 +1,4 @@
-# U.S. Treasury Fiscal Data (fiscaldata)
+# U.S. Treasury Fiscal Data
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,108 +64,123 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-U.S. Treasury Fiscal Data is a free, public source for federal government financial data published by the U.S. Bureau of the Fiscal Service. Its REST API serves machine-readable **government reports** and **economic indicators** — the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of federal revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions — as JSON, CSV, or XML.
+U.S. Treasury Fiscal Data is a free, public source for federal government financial data published by the Bureau of the Fiscal Service. Its REST API serves machine-readable government reports and economic indicators - the national debt, average interest rates on Treasury securities, daily and monthly Treasury statements of federal revenue and spending, Treasury reporting rates of exchange, and Treasury securities auctions - as JSON, CSV, or XML. Every dataset endpoint responds from a single database table and supports field selection, filtering, sorting, and pagination. No registration, API key, or authentication is required, and the data is in the public domain.
 
-**Access model: completely free and open.** No registration, no API key, and no authentication are required. The underlying data is a U.S. Government work in the public domain. Each dataset endpoint responds from a single database table and supports field selection (`fields`), filtering (`filter`), sorting (`sort`), format selection (`format`), and pagination (`page[number]` / `page[size]`).
+**Areas:** Government Data · Treasury · Economic Indicators · Interest Rates · Open Data · National Debt · Government Reports · Public Domain · Federal Finance
 
-**Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
+## U.S. Treasury Fiscal Data on APIs.io
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/fiscaldata/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/fiscaldata/refs/heads/main/apis.yml)
+Everything profiled for U.S. Treasury Fiscal Data is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fiscaldata/](https://apis.io/providers/fiscaldata/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- Government Data
-- Treasury
-- Economic Indicators
-- Interest Rates
-- Open Data
-- National Debt
-- Government Reports
-- Public Domain
-- Federal Finance
+- [U.S. Treasury Fiscal Data Daily Treasury Statement API](https://apis.io/apis/fiscaldata/fiscaldata-daily-treasury-statement-api/) — Daily federal cash and debt operations.
+- [U.S. Treasury Fiscal Data Debt API](https://apis.io/apis/fiscaldata/fiscaldata-debt-api/) — National debt outstanding and interest expense on the debt.
+- [U.S. Treasury Fiscal Data Exchange Rates API](https://apis.io/apis/fiscaldata/fiscaldata-exchange-rates-api/) — Treasury reporting rates of exchange for foreign currencies.
+- [U.S. Treasury Fiscal Data Interest Rates API](https://apis.io/apis/fiscaldata/fiscaldata-interest-rates-api/) — Average interest rates on U.S. Treasury securities.
+- [U.S. Treasury Fiscal Data Monthly Treasury Statement API](https://apis.io/apis/fiscaldata/fiscaldata-monthly-treasury-statement-api/) — Monthly federal receipts, outlays, and the budget deficit.
+- [U.S. Treasury Fiscal Data Securities API](https://apis.io/apis/fiscaldata/fiscaldata-securities-api/) — Treasury securities auction results.
+- [U.S. Treasury Fiscal Data National Debt API](https://apis.io/apis/fiscaldata/fiscaldata-national-debt-api/) — Federal debt, public debt outstanding, and interest rate data.
+- [U.S. Treasury Fiscal Data Treasury Statements API](https://apis.io/apis/fiscaldata/fiscaldata-treasury-statements-api/) — Daily and monthly Treasury financial statements.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-11
-- **Modified:** 2026-07-11
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## Query Parameters (all endpoints)
+#### Agentic access (1)
 
-- `fields` — comma-separated columns to return, e.g. `record_date,tot_pub_debt_out_amt`
-- `filter` — `field:operator:value` (operators: `lt`, `lte`, `gt`, `gte`, `eq`, `in`), comma-separated for AND
-- `sort` — comma-separated fields; prefix `-` for descending, e.g. `-record_date`
-- `format` — `json` (default), `csv`, or `xml`
-- `page[number]` — page number (1-based)
-- `page[size]` — records per page (max 10000)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-## APIs
+- [Fiscaldata Agentic Access](https://apis.io/agentic-access/fiscaldata/fiscaldata-agentic-access/)
 
-### Treasury Debt API
+#### Collections (7)
 
-National debt figures as machine-readable government reports. Debt to the Penny reports total public debt outstanding each day (debt held by the public plus intragovernmental holdings); the Interest Expense on the Debt dataset reports monthly and fiscal-year-to-date interest paid on the debt.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/debt-to-the-penny](https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/debt-to-the-penny)
-- **Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
-- Example: `GET /v2/accounting/od/debt_to_penny?fields=record_date,tot_pub_debt_out_amt&sort=-record_date`
+- [U.S. Treasury Fiscal Data API](https://apis.io/collections/fiscaldata/open-fiscaldata/)
+- [U.S. Treasury Fiscal Data Daily Treasury Statement API](https://apis.io/collections/fiscaldata/open-fiscaldata-daily-treasury-statement-api/)
+- [U.S. Treasury Fiscal Data Daily Treasury Statement Debt API](https://apis.io/collections/fiscaldata/open-fiscaldata-debt-api/)
+- [U.S. Treasury Fiscal Data Daily Treasury Statement Exchange Rates API](https://apis.io/collections/fiscaldata/open-fiscaldata-exchange-rates-api/)
+- [U.S. Treasury Fiscal Data Daily Treasury Statement Interest Rates API](https://apis.io/collections/fiscaldata/open-fiscaldata-interest-rates-api/)
+- [U.S. Treasury Fiscal Data Daily Treasury Statement Monthly Treasury Statement API](https://apis.io/collections/fiscaldata/open-fiscaldata-monthly-treasury-statement-api/)
+- [U.S. Treasury Fiscal Data Daily Treasury Statement Securities API](https://apis.io/collections/fiscaldata/open-fiscaldata-securities-api/)
 
-### Average Interest Rates API
+#### Plans and pricing (1)
 
-Monthly average interest rates on U.S. Treasury securities by security type and description — Bills, Notes, Bonds, TIPS, Floating Rate Notes, and government account series. A core economic indicator for the government's cost of borrowing.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities](https://fiscaldata.treasury.gov/datasets/average-interest-rates-treasury-securities/average-interest-rates-on-u-s-treasury-securities)
-- **Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
-- Example: `GET /v2/accounting/od/avg_interest_rates?filter=record_date:gte:2024-01-01&sort=-record_date`
+- [Fiscaldata Plans Pricing](https://apis.io/plans/fiscaldata/fiscaldata-plans-pricing/)
 
-### Daily Treasury Statement API
+#### Rate limits (1)
 
-The Daily Treasury Statement (DTS) summarizes the federal government's cash and debt operations each business day — the Treasury General Account operating cash balance, deposits and withdrawals of operating cash, and public debt transactions.
+Published request limits.
 
-- **Human URL:** [https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance](https://fiscaldata.treasury.gov/datasets/daily-treasury-statement/operating-cash-balance)
-- **Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
-- Example: `GET /v1/accounting/dts/operating_cash_balance?fields=record_date,account_type,open_today_bal&sort=-record_date`
+- [Fiscaldata Rate Limits](https://apis.io/rate-limits/fiscaldata/fiscaldata-rate-limits/)
 
-### Monthly Treasury Statement API
+#### FinOps (1)
 
-The Monthly Treasury Statement (MTS) is the official monthly report of federal receipts (revenue), outlays (spending), and the resulting budget surplus or deficit — the primary economic indicators for U.S. fiscal policy.
+What the API costs to run, by operation.
 
-- **Human URL:** [https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government](https://fiscaldata.treasury.gov/datasets/monthly-treasury-statement/summary-of-receipts-and-outlays-of-the-u-s-government)
-- **Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
-- Example: `GET /v1/accounting/mts/mts_table_4?sort=-record_date`
+- [Fiscaldata Finops](https://apis.io/finops/fiscaldata/fiscaldata-finops/)
 
-### Treasury Reporting Rates of Exchange API
+## Where to find this API
 
-The official U.S. Treasury exchange rates used to convert foreign currency balances into U.S. dollars for reporting, provided quarterly per country and currency.
-
-- **Human URL:** [https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange](https://fiscaldata.treasury.gov/datasets/treasury-reporting-rates-exchange/treasury-reporting-rates-of-exchange)
-- **Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
-- Example: `GET /v1/accounting/od/rates_of_exchange?filter=record_date:gte:2024-01-01&sort=-record_date`
-
-### Treasury Securities API
-
-Treasury securities auction data — CUSIP, security type and term, auction/issue/maturity dates, price per 100, yields, and bid metrics for Bills, Notes, Bonds, TIPS, and FRNs.
-
-- **Human URL:** [https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query](https://fiscaldata.treasury.gov/datasets/auctions-query/auctions-query)
-- **Base URL:** `https://api.fiscaldata.treasury.gov/services/api/fiscal_service`
-- Example: `GET /v1/accounting/od/auctions_query?sort=-auction_date`
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://fiscaldata.treasury.gov)
 - [Documentation](https://fiscaldata.treasury.gov/api-documentation/)
-- [Support — Fiscal Service Enterprise API Community](https://api-community.fiscal.treasury.gov/)
-- [GitHub — fiscal-data source](https://github.com/fedspendingtransparency/fiscal-data)
-- [Plans](plans/fiscaldata-plans-pricing.yml)
-- [Rate Limits](rate-limits/fiscaldata-rate-limits.yml)
-- [Fin Ops](finops/fiscaldata-finops.yml)
+- [Support](https://api-community.fiscal.treasury.gov/)
+- [GitHub](https://github.com/fedspendingtransparency/fiscal-data)
 
-## Access and Licensing
+## API Evangelist rating
 
-- **Authentication:** None. The API is open and requires no key or account.
-- **Cost:** Free. There is no paid tier and no billing.
-- **License:** U.S. Government work in the public domain; data may be used, reproduced, and redistributed freely.
-- **Availability:** Subject to federal government operations; no SLA is offered.
+**Kin Score 25.8** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 71.4 |
+| Contract quality | 46.8 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 34.5 |
+| Access clarity | 5.3 |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Agent readiness 27.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | — |
+| Idempotency | na |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 0.0** — Government & Public Sector
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fiscaldata/](https://apis.io/providers/fiscaldata/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for U.S. Treasury Fiscal Data: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fiscaldata/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
